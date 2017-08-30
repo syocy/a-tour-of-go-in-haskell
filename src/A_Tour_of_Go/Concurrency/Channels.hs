@@ -18,12 +18,12 @@ sum xs chan = do
 
 -- |
 -- >>> main
--- (17, -3, 14)
+-- (-5,17,12)
 main :: IO ()
 main = do
   let s = [7, 2, 8, -9, 4, 0]
   c <- newChan
-  async $ sum (take (length s `div` 2) s) c
   async $ sum (drop (length s `div` 2) s) c
+  async $ sum (take (length s `div` 2) s) c
   [x, y] <- sequence [readChan c, readChan c]
   print (x, y, x+y)
