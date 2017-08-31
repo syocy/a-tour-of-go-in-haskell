@@ -1,6 +1,7 @@
 module A_Tour_of_Go.Concurrency.BufferedChannels where
 
-import Control.Concurrent.STM (atomically, TBQueue, newTBQueue, readTBQueue, writeTBQueue)
+-- import Control.Concurrent.STM (atomically, TBQueue, newTBQueue, readTBQueue, writeTBQueue)
+import Control.Concurrent.BoundedChan (BoundedChan, newBoundedChan, writeChan, readChan)
 
 -- |
 -- >>> main
@@ -9,11 +10,10 @@ import Control.Concurrent.STM (atomically, TBQueue, newTBQueue, readTBQueue, wri
 -- 3
 main :: IO ()
 main = do
-  c <- atomically $ newTBQueue 2 :: IO (TBQueue Int)
-  atomically $ do
-    writeTBQueue c 1
-    writeTBQueue c 2
-  print =<< atomically (readTBQueue c)
-  print =<< atomically (readTBQueue c)
-  atomically $ writeTBQueue c 3
-  print =<< atomically (readTBQueue c)
+  ch <- newBoundedChan 2 :: IO (BoundedChan Int)
+  writeChan ch 1
+  writeChan ch 2
+  print =<< readChan ch
+  print =<< readChan ch
+  writeChan ch 3
+  print =<< readChan ch
