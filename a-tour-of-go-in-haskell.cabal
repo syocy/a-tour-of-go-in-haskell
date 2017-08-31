@@ -21,6 +21,7 @@ library
                      , A_Tour_of_Go.Concurrency.Channels
                      , A_Tour_of_Go.Concurrency.BufferedChannels
                      , A_Tour_of_Go.Concurrency.RangeAndClose
+                     , A_Tour_of_Go.Concurrency.Select
   build-depends:       base >= 4.7 && < 5
                      , async >= 2.1
                      , stm >= 2.4
