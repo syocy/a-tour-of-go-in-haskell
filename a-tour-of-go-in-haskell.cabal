@@ -24,6 +24,7 @@ library
                      , A_Tour_of_Go.Concurrency.Select
                      , A_Tour_of_Go.Concurrency.DefaultSelection
                      , A_Tour_of_Go.Concurrency.Tree
+                     , A_Tour_of_Go.Concurrency.ExerciseEquivalentBinaryTrees
   build-depends:       base >= 4.7 && < 5
                      , async >= 2.1
                      , stm >= 2.4
@@ -32,6 +33,7 @@ library
                      , deepseq
                      , mwc-random >= 0.13
                      , vector >= 0.11
+                     , QuickCheck >= 2.9
   default-language:    Haskell2010
 
 executable a-tour-of-go-in-haskell-exe

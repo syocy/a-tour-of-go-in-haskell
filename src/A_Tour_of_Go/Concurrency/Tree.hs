@@ -1,11 +1,21 @@
-module A_Tour_of_Go.Concurrency.Tree (Tree(..), newTree, shuffle) where
+module A_Tour_of_Go.Concurrency.Tree (Tree(..), newTree, shuffle, insert) where
 
 import Prelude hiding (Either(..))
 import System.Random.MWC
 import qualified Data.Vector as V
 import Data.List (sort)
+import Test.QuickCheck hiding (shuffle)
+import Control.Monad (liftM3)
 
 data Tree = Nil | Tree Int Tree Tree deriving(Show)
+
+instance Arbitrary Tree where
+  arbitrary = sized tree'
+    where tree' 0 = return Nil
+          tree' n = oneof [ return Nil
+                          , liftM3 Tree arbitrary subtree subtree
+                          ]
+            where subtree = tree' (n `div` 2)
 
 size :: Int
 size = 10
