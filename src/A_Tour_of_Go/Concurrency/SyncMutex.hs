@@ -1,7 +1,7 @@
 module A_Tour_of_Go.Concurrency.SyncMutex where
 
 import Control.Concurrent (threadDelay)
-import Control.Concurrent.STM (atomically, TVar, newTVar, modifyTVar, readTVar)
+import Control.Concurrent.STM (atomically, TVar, newTVar, modifyTVar', readTVar)
 import Control.Concurrent.Async (async)
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
@@ -14,7 +14,7 @@ newSafeCounter m = atomically $ SafeCounter `fmap` newTVar m
 
 inc :: SafeCounter -> String -> IO ()
 inc c key = atomically $ do
-  modifyTVar (v c) $ Map.alter inc' key
+  modifyTVar' (v c) $ Map.alter inc' key
     where
       inc' Nothing = Just 1
       inc' (Just x) = Just (x + 1)
