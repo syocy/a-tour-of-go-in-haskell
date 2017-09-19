@@ -1,3 +1,5 @@
+[![Travis](https://img.shields.io/travis/syocy/a-tour-of-go-in-haskell.svg)](https://travis-ci.org/syocy/a-tour-of-go-in-haskell)
+
 # A Tour of Go in Haskell
 
 [A Tour of Go](https://tour.golang.org/) is a famous tutorial of the Go programming language.
