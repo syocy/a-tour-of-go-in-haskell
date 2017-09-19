@@ -1,15 +1,17 @@
 module A_Tour_of_Go.Concurrency.ExerciseWebCrawler where
 
-import Data.Map.Strict (Map)
+import           Control.Concurrent (threadDelay)
+import           Control.Concurrent.Async (Async, async, wait, cancel, withAsync, forConcurrently_)
+import           Control.Concurrent.STM ( atomically
+                                        , TVar, newTVar, modifyTVar', readTVar
+                                        , TQueue, newTQueue, writeTQueue, readTQueue
+                                        )
+import           Control.DeepSeq (deepseq)
+import           Control.Monad (forM_, forM, when, forever)
+import           Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
-import Control.Monad (forM_, forM, when)
-import Data.Set (Set)
+import           Data.Set (Set)
 import qualified Data.Set as Set
-import Control.Concurrent.Async (async, wait, withAsync, forConcurrently_)
-import Control.Concurrent.STM ( atomically
-                              , TVar, newTVar, modifyTVar', readTVar
-                              , TQueue, newTQueue, writeTQueue, readTQueue)
-import Control.DeepSeq (deepseq)
 
 data FetchResult = Fetched { fetchedBody :: String, fetchedUrls :: [String] }
                  | FetchError String
@@ -33,8 +35,15 @@ crawl :: (Fetcher f) => String -> Int -> f -> IO ()
 crawl url depth f = do
   cache <- atomically $ newTVar Set.empty
   retQueue <- atomically $ newTQueue
+  a <- startOutputThread retQueue
   crawl' url depth f cache retQueue
-  --
+  threadDelay $ 10^3 -- wait last output
+  cancel a
+
+startOutputThread :: TQueue String -> IO (Async ())
+startOutputThread retQueue = async $ forever $ do
+  str <- atomically $ readTQueue retQueue
+  putStrLn str
 
 crawl' :: (Fetcher f) => String -> Int -> f -> TVar (Set String) -> TQueue String -> IO ()
 crawl' url depth f cache retQueue | depth <= 0 = return ()
@@ -48,12 +57,6 @@ crawl' url depth f cache retQueue | depth <= 0 = return ()
         atomically $ writeTQueue retQueue $ "found: " ++ url ++ " \"" ++ body ++ "\""
         forConcurrently_ subUrls $ \subUrl -> do
           crawl' subUrl (depth - 1) f cache retQueue
-        -- as <- forM subUrls $ \subUrl -> do
-        --   print subUrl
-        --   async $ do
-        --     print subUrl
-        --     crawl' subUrl (depth - 1) f cache
-        -- forM_ as wait
 
 tryReserveUrl :: String -> TVar (Set String) -> IO Bool
 tryReserveUrl url cache = atomically $ do
@@ -64,7 +67,11 @@ tryReserveUrl url cache = atomically $ do
 
 -- |
 -- >>> main
--- 0
+-- found: http://golang.org/ "The Go Programming Language"
+-- found: http://golang.org/pkg/ "Packages"
+-- not found: http://golang.org/cmd/
+-- found: http://golang.org/pkg/fmt/ "Packages fmt"
+-- found: http://golang.org/pkg/os/ "Packages os"
 main :: IO ()
 main = do
   -- crawlNaive "http://golang.org/" 4 fetcher

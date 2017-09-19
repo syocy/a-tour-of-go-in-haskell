@@ -1,11 +1,13 @@
 module A_Tour_of_Go.Concurrency.SyncMutex where
 
-import Control.Concurrent (threadDelay)
-import Control.Concurrent.STM (atomically, TVar, newTVar, modifyTVar', readTVar)
-import Control.Concurrent.Async (async)
-import Data.Map.Strict (Map)
+import           Control.Concurrent (threadDelay)
+import           Control.Concurrent.Async (async)
+import           Control.Concurrent.STM ( atomically
+                                        , TVar, newTVar, modifyTVar', readTVar
+                                        )
+import           Control.Monad (replicateM_)
+import           Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
-import Control.Monad (replicateM_)
 
 data SafeCounter = SafeCounter { v :: TVar (Map String Int) }
 
