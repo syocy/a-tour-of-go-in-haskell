@@ -37,7 +37,7 @@ crawl url depth f = do
   retQueue <- atomically $ newTQueue
   a <- startOutputThread retQueue
   crawl' url depth f cache retQueue
-  threadDelay $ 10^3 -- wait last output
+  threadDelay $ 10 * 10^3 -- wait last output
   cancel a
 
 startOutputThread :: TQueue String -> IO (Async ())

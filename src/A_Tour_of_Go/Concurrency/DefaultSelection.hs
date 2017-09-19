@@ -1,4 +1,3 @@
-{-# LANGUAGE ScopedTypeVariables #-}
 module A_Tour_of_Go.Concurrency.DefaultSelection where
 
 import Control.Concurrent.STM ( STM, atomically, orElse
@@ -7,7 +6,6 @@ import Control.Concurrent.STM ( STM, atomically, orElse
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async (async, cancel)
 import Control.Monad (forever, join)
-import System.Timeout (timeout)
 
 select :: [STM a] -> IO a
 select ms = atomically $ foldl1 snocStm ms

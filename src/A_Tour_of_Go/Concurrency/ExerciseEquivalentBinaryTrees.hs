@@ -7,9 +7,6 @@ import Control.Concurrent.Async (async)
 import Control.Monad (forever, forM, forM_)
 import Data.Maybe (catMaybes, isJust)
 
--- -- $setup
--- -- >>> import Test.QuickCheck
-
 walk :: Tree -> Chan (Maybe Int) -> IO ()
 walk tree ch = walk' tree >> writeChan ch Nothing
   where
@@ -19,8 +16,6 @@ walk tree ch = walk' tree >> writeChan ch Nothing
       writeChan ch $ Just v
       walk' r
 
--- -- |
--- -- prop> \t -> monadicIO $ do { ch' <- run $ do { ch <- newChan; walk t ch; (catMaybes . takeWhile isJust) `fmap` getChanContents ch }; assert $ ch' == walkPure t; }
 walkPure :: Tree -> [Int]
 walkPure Nil = []
 walkPure (Tree v l r) = walkPure l ++ [v] ++ walkPure r
@@ -49,10 +44,7 @@ samePure t1 t2 = walkPure t1 == walkPure t2
 -- |
 -- >>> main
 -- 1,2,3,4,5,6,7,8,9,10,
--- 1,2,3,4,5,6,7,8,9,10,
 -- True
--- True
--- False
 -- False
 main :: IO ()
 main = do
@@ -62,11 +54,22 @@ main = do
   ch' <- (catMaybes . takeWhile isJust) `fmap` getChanContents ch
   forM_ ch' $ \x -> putStr (show x ++ ",")
   putStrLn ""
+  tree1' <- newTree 1
+  tree2 <- newTree 2
+  print =<< same tree1 tree1'
+  print =<< same tree1 tree2
+
+-- |
+-- >>> mainPure
+-- 1,2,3,4,5,6,7,8,9,10,
+-- True
+-- False
+mainPure :: IO ()
+mainPure = do
+  tree1 <- newTree 1
   forM_ (walkPure tree1) $ \x -> putStr (show x ++ ",")
   putStrLn ""
   tree1' <- newTree 1
   tree2 <- newTree 2
-  print =<< same tree1 tree1'
   print $ samePure tree1 tree1'
-  print =<< same tree1 tree2
   print $ samePure tree1 tree2

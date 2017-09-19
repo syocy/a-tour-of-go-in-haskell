@@ -11,12 +11,12 @@ select ms = atomically $ foldl1 snocStm ms
     snocStm :: STM a -> STM a -> STM a
     snocStm prevOnes currentOne = prevOnes `orElse` currentOne
 
-fibonacci :: TQueue Int -> TQueue Int -> IO ()
-fibonacci ch quit = go 0 1
+fibonacci :: TQueue Int -> TQueue () -> IO ()
+fibonacci ch quit = loop 0 1
   where
-    go x y = do
+    loop x y = do
       join $ select [ readTQueue quit  >> return (putStrLn "quit")
-                    , writeTQueue ch x >> return (go y (x+y))
+                    , writeTQueue ch x >> return (loop y (x+y))
                     ]
 
 -- |
@@ -40,5 +40,5 @@ main = do
     forM_ [0..9] $ \_ -> do
       x <- atomically $ readTQueue ch
       print x
-    atomically $ writeTQueue quit 0
+    atomically $ writeTQueue quit ()
   fibonacci ch quit

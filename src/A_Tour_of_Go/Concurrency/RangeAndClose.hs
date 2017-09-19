@@ -5,6 +5,9 @@ import Control.Concurrent.Async (async)
 import Control.Monad (forM_, foldM_)
 import Data.Maybe (catMaybes, isJust)
 
+range :: BoundedChan (Maybe a) -> IO [a]
+range ch = catMaybes . takeWhile isJust <$> getChanContents ch
+
 fibonacci :: Int -> BoundedChan (Maybe Int) -> IO ()
 fibonacci n ch = do
   foldM_ inner (0, 1) [0..(n-1)]
@@ -15,8 +18,11 @@ fibonacci n ch = do
         writeChan ch $ Just x
         return (y, x + y)
 
-range :: BoundedChan (Maybe a) -> IO [a]
-range ch = catMaybes . takeWhile isJust <$> getChanContents ch
+fibonacciByList :: Int -> [Int]
+fibonacciByList n = fibonacciByList' n 0 1
+  where
+    fibonacciByList' 0 a _ = []
+    fibonacciByList' n a b = a : fibonacciByList' (n-1) b (a + b)
 
 -- |
 -- >>> main
@@ -37,5 +43,25 @@ main = do
   async $ fibonacci size ch
   ch' <- range ch
   forM_ ch' $ \i -> do
+    print i
+  return ()
+
+-- |
+-- >>> mainByList
+-- 0
+-- 1
+-- 1
+-- 2
+-- 3
+-- 5
+-- 8
+-- 13
+-- 21
+-- 34
+mainByList :: IO ()
+mainByList = do
+  let size = 10
+  let fibs = fibonacciByList size
+  forM_ fibs $ \i -> do
     print i
   return ()
