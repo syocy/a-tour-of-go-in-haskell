@@ -22,8 +22,7 @@ inc c key = atomically $ do
       inc' (Just x) = Just (x + 1)
 
 value :: SafeCounter -> String -> IO Int
-value c key = atomically $ do
-  Map.findWithDefault 0 key `fmap` readTVar (v c)
+value c key = Map.findWithDefault 0 key `fmap` atomically (readTVar $ v c)
 
 -- |
 -- >>> main
