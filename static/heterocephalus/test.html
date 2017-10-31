@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>test page</title>
+        <link rel="stylesheet"  href="static/css/normalize.css">
+        <link rel="stylesheet"  href="static/css/skeleton.css">
+    </head>
+    <body>
+        <p>Hello, #{name}</p>
+        #{fromJust (vars ^? (key "aaa" . _String))}
+        #{vars !! "aaa"}
+    </body>
+</html>
