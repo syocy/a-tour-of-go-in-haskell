@@ -4,39 +4,18 @@
 
 module Main where
 
-import Support ((!!), (!!!), parseLocale, parsePost)
+import Support
 import Text.Heterocephalus
 import Text.Blaze.Renderer.Text (renderMarkup)
-import qualified Data.Text as T
-import qualified Data.Text.IO as T
-import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Lazy.IO as LT
 import System.Directory (createDirectoryIfMissing)
 import qualified Data.Yaml as Yaml
-import Data.Aeson.Lens
-import Control.Lens hiding (noneOf)
-import Data.Maybe (fromJust, maybe)
 import Data.Either (either)
 import Prelude hiding ((!!))
 import Data.Monoid ((<>))
 import System.FilePath.Glob (glob)
 import Control.Monad (forM_)
 import Language.Haskell.TH
--- import Text.Megaparsec
--- import Text.Megaparsec.Text
--- import qualified Data.HashMap.Lazy as LHM
-
--- do
---   iMaybe <- runIO $ Yaml.decodeFile "static/i18n/ja_JP.yaml" :: Q (Maybe Yaml.Value)
---   let i = case iMaybe of
---             Nothing -> error "failed to parse yaml file"
---             Just x -> x
---   let f v name = case v of
---         Yaml.Object v -> concat $ map (\(n, v') -> f v' (name <> "_" <> n)) $ LHM.toList v
---         Yaml.String t -> [(name, t)]
---   let x = f i ""
---   runIO $ print x
---   return $ []
 
 main :: IO ()
 main = do

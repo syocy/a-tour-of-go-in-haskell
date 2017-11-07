@@ -13,7 +13,7 @@ j !! k = case (j ^? (key k) . _String) of
   Just x -> x
 
 (!!!) :: (AsValue s) => s -> [T.Text] -> T.Text
-j !!! [] = error "at least 1 key is required"
+_ !!! [] = error "at least 1 key is required"
 j !!! a@(k:ks) = case (j ^?  key k . (foldr (.) _String $ map key ks)) of
   Nothing -> error $ "key not found: " <> show a
   Just x -> x
