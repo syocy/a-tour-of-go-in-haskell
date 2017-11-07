@@ -4,7 +4,7 @@
 
 module Main where
 
-import Support (parseLocale, parsePost)
+import Support ((!!), (!!!), parseLocale, parsePost)
 import Text.Heterocephalus
 import Text.Blaze.Renderer.Text (renderMarkup)
 import qualified Data.Text as T
@@ -24,20 +24,26 @@ import Control.Monad (forM_)
 import Language.Haskell.TH
 -- import Text.Megaparsec
 -- import Text.Megaparsec.Text
+-- import qualified Data.HashMap.Lazy as LHM
 
-(!!) :: (AsValue s) => s -> T.Text -> T.Text
-j !! k = case (j ^? (key k) . _String) of
-  Nothing -> error $ "key not found: " <> show k
-  Just x -> x
-
-(!!!) :: (AsValue s) => s -> [T.Text] -> T.Text
-j !!! [] = error "at least 1 key is required"
-j !!! a@(k:ks) = case (j ^?  key k . (foldr (.) _String $ map key ks)) of
-  Nothing -> error $ "key not found: " <> show a
-  Just x -> x
+-- do
+--   iMaybe <- runIO $ Yaml.decodeFile "static/i18n/ja_JP.yaml" :: Q (Maybe Yaml.Value)
+--   let i = case iMaybe of
+--             Nothing -> error "failed to parse yaml file"
+--             Just x -> x
+--   let f v name = case v of
+--         Yaml.Object v -> concat $ map (\(n, v') -> f v' (name <> "_" <> n)) $ LHM.toList v
+--         Yaml.String t -> [(name, t)]
+--   let x = f i ""
+--   runIO $ print x
+--   return $ []
 
 main :: IO ()
 main = do
+  generateHtmlFiles
+
+generateHtmlFiles :: IO ()
+generateHtmlFiles = do
   createDirectoryIfMissing True "target"
   iFilenames <- glob "static/i18n/*.yaml"
   forM_ iFilenames $ \iFilename -> do
@@ -51,12 +57,14 @@ main = do
       Right locale -> do
         let dirname = "target/" <> locale <> "/"
         createDirectoryIfMissing True dirname
-        let zipped = $(do
-                     hFilenames <- runIO $ glob "static/heterocephalus/*.html"
-                     let names = map (either (error . show) id . parsePost "static/heterocephalus/") hFilenames
-                     namesE <- mapM (\x -> [|x|]) names
-                     compiledFilesE <- mapM compileHtmlFile hFilenames
-                     return $ ListE $ zipWith (\x y -> TupE [x,y]) namesE compiledFilesE
-                     )
-        forM_ zipped $ \(name, compiled) -> do
+        let compiledDict =
+              $(do
+                   hFilenames <- runIO $ glob "static/heterocephalus/*.html"
+                   let names = map (either (error . show) id . parsePost "static/heterocephalus/") hFilenames
+                   namesE <- mapM (\x -> [|x|]) names
+                   compiledFilesE <- mapM compileHtmlFile hFilenames
+                   return $ ListE $ zipWith (\x y -> TupE [x,y]) namesE compiledFilesE
+               )
+        forM_ compiledDict $ \(name, compiled) -> do
           LT.writeFile (dirname <> name) $ renderMarkup compiled
+

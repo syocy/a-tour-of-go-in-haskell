@@ -1,8 +1,22 @@
 module Support where
 
+import Control.Lens
+import Data.Aeson.Lens
+import Data.Monoid ((<>))
+import qualified Data.Text as T
 import Text.Megaparsec
 import Text.Megaparsec.Text
-import qualified Data.Text as T
+
+(!!) :: (AsValue s) => s -> T.Text -> T.Text
+j !! k = case (j ^? (key k) . _String) of
+  Nothing -> error $ "key not found: " <> show k
+  Just x -> x
+
+(!!!) :: (AsValue s) => s -> [T.Text] -> T.Text
+j !!! [] = error "at least 1 key is required"
+j !!! a@(k:ks) = case (j ^?  key k . (foldr (.) _String $ map key ks)) of
+  Nothing -> error $ "key not found: " <> show a
+  Just x -> x
 
 localeParser :: Parser String
 localeParser = (many $ try dirLayer) >> manyTill anyChar yamlSuffix

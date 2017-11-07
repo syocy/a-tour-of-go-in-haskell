@@ -54,6 +54,7 @@ executable a-tour-of-go-in-haskell-exe
                      , lens-aeson
                      , yaml
                      , containers
+                     , unordered-containers >= 0.2
                      , Glob
                      , megaparsec
                      , template-haskell >= 2.11
