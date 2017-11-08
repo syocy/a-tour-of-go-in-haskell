@@ -1,2 +1,8 @@
 test:
   message: Hello
+
+goroutines:
+  first: ""
+  inter: ""
+  post: ""
+  detail: ""

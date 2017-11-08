@@ -1,2 +1,8 @@
 test:
   message: こんにちは
+
+goroutines:
+  first: ""
+  inter: ""
+  post: ""
+  detail: ""
