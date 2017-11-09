@@ -5,10 +5,10 @@ goroutines:
   first: "Haskell は Go と同じく軽量スレッドの機能を持っています。"
   inter: "これは新しい軽量スレッドを作り、その中で次の処理を起動します。"
   post:
-    "<code>async :: IO a -> Async a</code> は何か特殊な構文というわけではなく通常の関数です。\
-    <code>async</code> 関数は <code>async</code> パッケージで提供されています。"
+    '<code>async :: IO a -> Async a</code> は何か特殊な構文というわけではなく通常の関数です。
+    <code>async</code> 関数は <a href="https://hackage.haskell.org/package/async">async</a> パッケージで提供されています。'
   detail:
-    "Haskell には複数のスレッドの間で値をやりとりするための道具がいくつかあります。\
-    基本的な道具は <code>base</code>(標準)パッケージによって提供されています。\
-    Go のようにチャネルを使うこともできます(次のページ)。"
+    'Haskell には複数のスレッドの間で値をやりとりするための道具がいくつかあります。
+    基本的な道具は標準の <a href="https://hackage.haskell.org/package/base">base</a> パッケージによって提供されています。
+    Go のようにチャネルを使うこともできます(次のページ)。'
   note: ""

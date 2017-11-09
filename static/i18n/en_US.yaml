@@ -5,10 +5,10 @@ goroutines:
   first: "Haskell has a lightweight thread feature as in Go."
   inter: "starts a new lightweight thread running"
   post:
-    "<code>async :: IO a -> Async a</code> is not a special syntax, but a just function.\
-    The function <code>async</code> is provided from the <code>async</code> package"
+    '<code>async :: IO a -> Async a</code> is not a special syntax, but a just function.
+    The function <code>async</code> is provided from the <a href="https://hackage.haskell.org/package/async">async</a> package.'
   detail:
-    "Haskell has several tools to communicate between different threads.\
-    Basic tools is provided from the standard <code>base</code> package.\
-    Just like Go, we can use channel. (See the next page.)"
+    'Haskell has several tools to communicate between different threads.
+    Basic tools are provided from the standard <a href="https://hackage.haskell.org/package/base">base</a> package.
+    Just like Go, we can use channel. (See the next page.)'
   note: ""
