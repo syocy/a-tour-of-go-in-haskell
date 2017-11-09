@@ -1,6 +1,6 @@
 .layout {
     display: grid;
-    grid-template-columns: 0px 2fr 0px;
+    grid-template-columns: 16px 1fr 4px 1fr 0px;
     grid-template-rows: 30px 1fr 100px;
 }
 
@@ -14,7 +14,24 @@
     grid-column: 2 / 3;
 }
 
-.right-side {
+.center {
     grid-row: 2 / 3;
     grid-column: 3 / 4;
+}
+
+.right-side {
+    grid-row: 2 / 3;
+    grid-column: 4 / 5;
+}
+
+.CodeMirror {
+    font-size: 16px;
+}
+
+html {
+    font-size: 14px;
+}
+
+body {
+    font-family: 游ゴシック体, 'Yu Gothic', YuGothic, 'ヒラギノ角ゴシック Pro', 'Hiragino Kaku Gothic Pro', メイリオ, Meiryo, Osaka, 'ＭＳ Ｐゴシック', 'MS PGothic',"Raleway", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

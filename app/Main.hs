@@ -43,7 +43,7 @@ generateHtmlFiles = do
                    hFilenames <- runIO $ glob "static/heterocephalus/**/*.html"
                    let names = map (either (error . show) id . parsePost "static/heterocephalus/") hFilenames
                    namesE <- mapM (\x -> [|x|]) names
-                   compiledFilesE <- mapM compileHtmlFile hFilenames
+                   compiledFilesE <- mapM compileTextFile hFilenames
                    return $ ListE $ zipWith (\x y -> TupE [x,y]) namesE compiledFilesE
                )
         forM_ compiledDict $ \(name, compiled) -> do

@@ -2,33 +2,46 @@
 <html>
     <head>
         <title>Goroutines</title>
+        <!-- skeleton.css -->
         <link rel="stylesheet"  href="../../css/normalize.css">
         <link rel="stylesheet"  href="../../css/skeleton.css">
+        <!-- CodeMirror -->
+        <script src="../../css/lib/codemirror.js"></script>
+        <link rel="stylesheet"  href="../../css/lib/codemirror.css">
+        <script src="../../css/mode/haskell/haskell.js"></script>
+        <link rel="stylesheet"  href="../../css/theme/solarized.css">
+        <!-- custom -->
         <link rel="stylesheet"  href="../../css/mystyle.css">
     </head>
     <body>
         <div class="layout">
             <div class="header">
-                a
+                (header)
+            </div>
+            <div class="center">
             </div>
             <div class="left-side">
-                b
+                <h4>Goroutines</h4>
+                <p>#{i !!! ["goroutines", "first"]}</p>
+                <pre><code>async $ f x y z</code></pre>
+                <p>#{i !!! ["goroutines", "inter"]}</p>
+                <pre><code>f x y z</code></pre>
+                <p>#{i !!! ["goroutines", "post"]}</p>
+                <p>#{i !!! ["goroutines", "detail"]}</p>
             </div>
             <div class="right-side">
-                c
+                <div id="code-editor"></div>
             </div>
         </div>
-
-        <h2>Goroutines</h2>
-        <p>#{i !!! ["goroutines", "first"]}</p>
-        <pre><code>
-async $ f x y z
-        </code></pre>
-        <p>#{i !!! ["goroutines", "inter"]}</p>
-        <pre><code>
-f x y z
-        </code></pre>
-        <p>#{i !!! ["goroutines", "post"]}</p>
-        <p>#{i !!! ["goroutines", "detail"]}</p>
+        <script>
+         var myCodeMirror = CodeMirror(document.querySelector("#code-editor"), {
+             value: "main :: IO ()\nmain = print 1",
+             mode: "haskell",
+             matchBrackets: true,
+             lineNumbers: true,
+             tabSize: 2,
+             theme: "solarized light"
+         });
+        </script>
     </body>
 </html>

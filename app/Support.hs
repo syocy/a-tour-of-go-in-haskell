@@ -6,6 +6,7 @@ import Data.Monoid ((<>))
 import qualified Data.Text as T
 import Text.Megaparsec
 import Text.Megaparsec.Text
+import Debug.Trace
 
 (!!) :: (AsValue s) => s -> T.Text -> T.Text
 j !! k = case (j ^? (key k) . _String) of
