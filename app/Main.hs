@@ -22,7 +22,6 @@ import Data.String (fromString)
 do
   sources <- runIO $ do
     cFilenames <- glob "src/A_Tour_of_Go/Concurrency/*.hs"
-    -- cFilenames <- glob "src/A_Tour_of_Go/Concurrency/Goroutines.hs"
     let escape x = case x of
           '"' -> "\\\""
           '\n' -> "\\n"
