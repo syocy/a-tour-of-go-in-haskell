@@ -7,6 +7,7 @@ import qualified Data.Text as T
 import Text.Megaparsec
 import Text.Megaparsec.Text
 import Debug.Trace
+import Data.List (intercalate)
 
 (!!) :: (AsValue s) => s -> T.Text -> T.Text
 j !! k = case (j ^? (key k) . _String) of
@@ -35,3 +36,22 @@ postParser prefix = manyTill anyChar (string prefix) >> many anyChar
 
 parsePost :: FilePath -> FilePath -> Either (ParseError Char Dec) String
 parsePost prefix filename = parse (postParser prefix) "" $ T.pack filename
+
+filenameParser :: Parser String
+filenameParser = (many $ try dirLayer) >> (intercalate "." <$> (many $ try nameLayer))
+  where
+    dirLayer :: Parser String
+    dirLayer = manyTill anyChar (char '/')
+    nameLayer :: Parser String
+    nameLayer = manyTill anyChar (char '.')
+
+parseFilename :: FilePath -> Either (ParseError Char Dec) String
+parseFilename filename = parse filenameParser "" $ T.pack filename
+
+commentParser :: Parser String
+commentParser = many (char ' ') >> string "--"
+
+isComment :: T.Text -> Bool
+isComment line = case parse commentParser "" line of
+  Left _ -> False
+  Right _ -> True

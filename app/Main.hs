@@ -7,16 +7,42 @@ module Main where
 import Support
 import Text.Heterocephalus
 import Text.Blaze.Renderer.Text (renderMarkup)
+import qualified Data.Text.Lazy as LT
 import qualified Data.Text.Lazy.IO as LT
 import qualified Data.Yaml as Yaml
 import Data.Either (either)
 import Prelude hiding ((!!), FilePath)
 import Data.Monoid ((<>))
 import System.FilePath.Glob (glob)
-import Control.Monad (forM_)
+import Control.Monad (forM, forM_)
 import Language.Haskell.TH
 import Turtle
 import Data.String (fromString)
+
+do
+  sources <- runIO $ do
+    cFilenames <- glob "src/A_Tour_of_Go/Concurrency/*.hs"
+    -- cFilenames <- glob "src/A_Tour_of_Go/Concurrency/Goroutines.hs"
+    let escape x = case x of
+          '"' -> "\\\""
+          '\n' -> "\\n"
+          a -> LT.singleton a
+    let isNotComment = not . isComment . LT.toStrict
+    let removeComment = LT.unlines . reverse . tail . reverse . filter isNotComment . LT.lines
+    contents <- map (LT.concatMap escape . removeComment) <$> mapM LT.readFile cFilenames
+    let names = map (either (error . show) id . parseFilename) cFilenames
+    return $ zip names contents
+  ret <- forM sources $ \(name, content) -> do
+    let name' = mkName $ "code" <> name
+    let contentStr = LT.unpack content
+    let v = ValD (VarP name') (NormalB (LitE (StringL contentStr))) []
+    strTMaybe <- lookupTypeName "String"
+    let strT = case strTMaybe of
+          Just a -> a
+          Nothing -> error ""
+    let ann = SigD name' (ConT strT)
+    return [ann, v]
+  return $ concat ret
 
 main :: IO ()
 main = do
