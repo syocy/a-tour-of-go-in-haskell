@@ -54,6 +54,8 @@ executable a-tour-of-go-in-haskell-exe
                      , megaparsec
                      , template-haskell >= 2.11
                      , turtle
+                     , extensible
+                     , lucid
   default-language:    Haskell2010
 
 test-suite a-tour-of-go-in-haskell-doctest
