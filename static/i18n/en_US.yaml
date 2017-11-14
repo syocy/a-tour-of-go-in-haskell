@@ -1,2 +1,18 @@
 test:
   message: Hello
+
+goroutines:
+  first: "Haskell has a lightweight thread feature as in Go."
+  inter: "starts a new lightweight thread running"
+  overviewPreAsync:
+    '<code>async :: IO a -> Async a</code> is not a special syntax, but a just function.
+    The function <code>async</code> is provided from the '
+  overviewPostAsync:
+    ' package'
+  detailPreBase:
+    'Haskell has several tools for communication between different threads.
+    Basic tools are provided from the standard '
+  detailPostBase:
+    ' package.
+    Just like Go, we can use channel. (See the next page.)'
+  note: ""

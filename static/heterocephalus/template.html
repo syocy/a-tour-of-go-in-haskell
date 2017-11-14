@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>#{title} - A Tour of Go in Haskell</title>
+        <!-- preconnect -->
+        <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+        <!-- skeleton.css -->
+        <link rel="stylesheet"  href="../../css/normalize.css">
+        <link rel="stylesheet"  href="../../css/skeleton.css">
+        <!-- CodeMirror -->
+        <script src="../../css/lib/codemirror.js"></script>
+        <link rel="stylesheet"  href="../../css/lib/codemirror.css">
+        <script src="../../css/mode/haskell/haskell.js"></script>
+        <link rel="stylesheet"  href="../../css/theme/solarized.css">
+        <!-- custom -->
+        <link rel="stylesheet"  href="../../css/mystyle.css">
+        <!-- Web fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/earlyaccess/notosansjapanese.css" rel="stylesheet" />
+    </head>
+    <body>
+        <div class="layout">
+            <div class="header">
+            </div>
+            <div class="header-content">
+                <h4>A Tour of Go in Haskell</h4>
+            </div>
+            <div class="control-panel">
+                <button>aaa</button>
+            </div>
+            <div class="left-side">
+                <div class="article">
+                    <h5>#{title}</h5>
+                    #{article}
+                </div>
+                <div class="pager">
+                    %{case prevPagePathMaybe}
+                    %{of Just prevPagePath}
+                    <a href="#{prevPagePath}">
+                        <span class="link">&lt;</span>
+                    </a>
+                    %{of Nothing}
+                    <span class="link disabled">&lt;</span>
+                    %{endcase}
+
+                    <span class="page-number">#{pageNumber}</span>
+                    <span>/</span>
+                    <span class="page-number">#{lastPageNumber}</span>
+
+                    %{case nextPagePathMaybe}
+                    %{of Just nextPagePath}
+                    <a href="#{nextPagePath}">
+                        <span class="link">&gt;</span>
+                    </a>
+                    %{of Nothing}
+                    <span class="link disabled">&gt;</span>
+                    %{endcase}
+                </div>
+            </div>
+            <div class="center">
+            </div>
+            <div class="right-side">
+                <div>
+                    <div id="code-editor"></div>
+                </div>
+            </div>
+        </div>
+        <script>
+         var myCodeMirror = CodeMirror(document.querySelector("#code-editor"), {
+             value: "#{code}",
+             mode: "haskell",
+             matchBrackets: true,
+             lineNumbers: true,
+             tabSize: 2,
+             theme: "solarized light"
+         });
+        </script>
+    </body>
+</html>

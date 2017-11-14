@@ -1,17 +1,4 @@
--- |
--- Module : A_Tour_of_Go.Concurrency.Goroutines
---
--- The @async@ package provides a thin layer over "Control.Concurrent" in the @base@ package.
---
--- > async f
---
--- starts a new asynchronous IO action @f@.
-
-module A_Tour_of_Go.Concurrency.Goroutines
-  (
-    say
-  , main
-  ) where
+module A_Tour_of_Go.Concurrency.Goroutines where
 
 import Control.Concurrent.Async (async)
 import Control.Concurrent (threadDelay)

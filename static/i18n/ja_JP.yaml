@@ -1,2 +1,18 @@
 test:
   message: こんにちは
+
+goroutines:
+  first: "Haskell は Go と同じく軽量スレッドの機能を持っています。"
+  inter: "これは新しい軽量スレッドを作り、その中で次の処理を起動します。"
+  overviewPreAsync:
+    '<code>async :: IO a -> Async a</code> は何か特殊な構文というわけではなく通常の関数です。
+    <code>async</code> 関数は '
+  overviewPostAsync:
+    ' パッケージで提供されています。'
+  detailPreBase:
+    'Haskell には複数のスレッドの間で値をやりとりするための道具がいくつかあります。
+    基本的な道具は標準の '
+  detailPostBase:
+    ' パッケージによって提供されています。
+    ちょうど Go のように、チャネルを使うこともできます(次のページ)。'
+  note: ""
