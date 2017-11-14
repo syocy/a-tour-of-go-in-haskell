@@ -106,8 +106,12 @@
     height: 400px;
 }
 
+code {
+    font-size: 100%;
+}
+
 html {
-    font-size: 12px;
+    font-size: 11px;
     overflow-y: scroll;
 }
 
