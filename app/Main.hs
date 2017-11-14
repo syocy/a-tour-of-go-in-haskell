@@ -83,9 +83,26 @@ pages = map toPage
              <> at "detailPostBase"
            )
     )
+  , ( "Channels", "A_Tour_of_Go/Concurrency/Channels.hs", "concurrency/channels.html", \i -> do
+        let at = at1 i "channels"
+        let at' = at1' i "channels"
+        p_ $ at "first"
+        pre_ $ code_ $ toHtmlRaw $ T.unlines
+          [ "writeChan ch v // " <> at' "writeChan"
+          , "readChan ch    // " <> at' "readChan"
+          ]
+        p_ $ at "postRW"
+        p_ $ at "preNewChan"
+        pre_ $ code_ $ toHtmlRaw $ T.unlines
+          [ "newChan"
+          ]
+        p_ $ at "postNewChan"
+        p_ $ at "example"
+    )
   ]
   where
-    at1 i key subKey = toHtmlRaw $ (i ^. dictF) !!! [key, subKey]
+    at1' i key subKey = (i ^. dictF) !!! [key, subKey]
+    at1 i key subKey = toHtmlRaw $ at1' i key subKey
 
 pagesWindow :: [Page] -> [(Maybe Page, Page, Maybe Page)]
 pagesWindow [] = []

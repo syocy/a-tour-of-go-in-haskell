@@ -11,11 +11,6 @@ sum xs chan = do
   let ret = L.sum xs
   writeChan chan ret
 
-sumBySTM :: [Int] -> TQueue Int -> IO ()
-sumBySTM xs chan = do
-  let ret = L.sum xs
-  atomically $ writeTQueue chan ret
-
 -- |
 -- >>> main
 -- (-5,17,12)
@@ -25,8 +20,15 @@ main = do
   c <- newChan
   async $ sum (drop (length s `div` 2) s) c
   async $ sum (take (length s `div` 2) s) c
-  [x, y] <- sequence [readChan c, readChan c]
+  [x, y] <- sequence [readChan c, readChan c] -- sequence run a list of actions
   print (x, y, x+y)
+
+{- ### STM version ### -}
+
+sumBySTM :: [Int] -> TQueue Int -> IO ()
+sumBySTM xs chan = do
+  let ret = L.sum xs
+  atomically $ writeTQueue chan ret
 
 -- |
 -- >>> mainBySTM

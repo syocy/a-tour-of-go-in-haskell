@@ -16,3 +16,16 @@ goroutines:
     ' package.
     Just like Go, we can use channel. (See the next page.)'
   note: ""
+
+channels:
+  first:
+    'Channel is one-directional tube to flow values.
+    Values are appended to the end of channel, then taken from the top of channel.'
+  writeChan: "Append v to the end of channel ch"
+  readChan: "Take one from the top of channel ch"
+  postRW: ""
+  preNewChan: "Channel instance must be built before use:"
+  postNewChan:
+    'When the channel is empty, <code>readChan</code> will block until new value.
+    Even if multiple threads use same channel, any thread can not be blocked indefinitely by fairness guarantee.'
+  example: ""
