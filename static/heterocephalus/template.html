@@ -35,7 +35,27 @@
                     #{article}
                 </div>
                 <div class="pager">
-                    this is pager
+                    %{case prevPagePathMaybe}
+                    %{of Just prevPagePath}
+                    <a href="#{prevPagePath}">
+                        <span class="link">&lt;</span>
+                    </a>
+                    %{of Nothing}
+                    <span class="link disabled">&lt;</span>
+                    %{endcase}
+
+                    <span class="page-number">#{pageNumber}</span>
+                    <span>/</span>
+                    <span class="page-number">#{lastPageNumber}</span>
+
+                    %{case nextPagePathMaybe}
+                    %{of Just nextPagePath}
+                    <a href="#{nextPagePath}">
+                        <span class="link">&gt;</span>
+                    </a>
+                    %{of Nothing}
+                    <span class="link disabled">&gt;</span>
+                    %{endcase}
                 </div>
             </div>
             <div class="center">

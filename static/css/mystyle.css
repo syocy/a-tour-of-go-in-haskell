@@ -61,6 +61,20 @@
     padding: 4px 0;
     margin: 0;
     text-align: center;
+    font-size: 2.4rem;
+}
+
+.link {
+    font-weight: 600;
+}
+
+.disabled {
+    color: #aaaaaa;
+}
+
+.page-number {
+    display: inline-block;
+    width: 3rem;
 }
 
 .left-side h5, .left-side h6 {

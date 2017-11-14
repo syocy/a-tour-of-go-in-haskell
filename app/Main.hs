@@ -26,6 +26,7 @@ import Data.String (fromString)
 import Data.Extensible
 import Control.Lens hiding ((:>))
 import Lucid
+import Data.List (transpose, tails)
 
 mkField "localeF dictF"
 type I18N = Record
@@ -86,6 +87,19 @@ pages = map toPage
   where
     at1 i key subKey = toHtmlRaw $ (i ^. dictF) !!! [key, subKey]
 
+pagesWindow :: [Page] -> [(Maybe Page, Page, Maybe Page)]
+pagesWindow [] = []
+pagesWindow (x:[]) = [(Nothing, x, Nothing)]
+pagesWindow (x:y:[]) = [(Nothing, x, Just y), (Just x, y, Nothing)]
+pagesWindow a@(x:y:z:xs) = (Nothing, x, Just y) : (pagesWindow' a <> [lastWindow a])
+  where
+    windows n xs = transpose (take n (tails xs))
+    pagesWindow' = map (\[x',y',z'] -> (Just x', y', Just z')) . windows 3
+    lastWindow = (\(x':y':_) -> (Just y', x', Nothing)) . reverse
+
+getLastPiece :: Page -> T.Text
+getLastPiece = ("./"<>) . snd . T.breakOnEnd "/" . (^.targetF)
+
 clenseCode :: LT.Text -> LT.Text
 clenseCode = LT.concatMap escape . removeComment
   where
@@ -99,7 +113,10 @@ clenseCode = LT.concatMap escape . removeComment
 generateHtmlFiles :: IO ()
 generateHtmlFiles = do
   i18ns <- loadI18NFiles
-  forM_ pages $ \page -> do
+  let lastPageNumber = length pages
+  forM_ (zip (pagesWindow pages) ([1..]::[Int])) $ \((prevPageMaybe, page, nextPageMaybe), pageNumber) -> do
+    let prevPagePathMaybe = getLastPiece `fmap` prevPageMaybe
+    let nextPagePathMaybe = getLastPiece `fmap` nextPageMaybe
     rawCode <- LT.readFile $ T.unpack $ "src/" <> (page ^. srcF)
     let code = clenseCode rawCode
     forM_ i18ns $ \i18n -> do
