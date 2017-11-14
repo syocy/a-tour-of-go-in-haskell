@@ -108,7 +108,7 @@ clenseCode = LT.concatMap escape . removeComment
       '\n' -> "\\n"
       c -> LT.singleton c
     isNotComment = not . isComment . LT.toStrict
-    removeComment = LT.unlines . reverse . tail . reverse . filter isNotComment . LT.lines
+    removeComment = LT.unlines . filter isNotComment . LT.lines
 
 generateHtmlFiles :: IO ()
 generateHtmlFiles = do
