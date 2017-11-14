@@ -10,7 +10,7 @@ goroutines:
   overviewPostAsync:
     ' package'
   detailPreBase:
-    'Haskell has several tools to communicate between different threads.
+    'Haskell has several tools for communication between different threads.
     Basic tools are provided from the standard '
   detailPostBase:
     ' package.
