@@ -106,6 +106,7 @@ clenseCode = LT.concatMap escape . removeComment
     escape x = case x of
       '"' -> "\\\""
       '\n' -> "\\n"
+      '\\' -> "\\\\"
       c -> LT.singleton c
     isNotComment = not . isComment . LT.toStrict
     removeComment = LT.unlines . filter isNotComment . LT.lines
