@@ -23,7 +23,7 @@ main = do
   [x, y] <- sequence [readChan c, readChan c] -- sequence run a list of actions
   print (x, y, x+y)
 
-{- ### STM version ### -}
+{- STM version -}
 
 sumBySTM :: [Int] -> TQueue Int -> IO ()
 sumBySTM xs chan = do
