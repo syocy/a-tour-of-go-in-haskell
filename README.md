@@ -1,4 +1,4 @@
-[![Travis](https://img.shields.io/travis/syocy/a-tour-of-go-in-haskell.svg)](https://travis-ci.org/syocy/a-tour-of-go-in-haskell)
+[![Travis](https://travis-ci.org/syocy/a-tour-of-go-in-haskell.svg?branch=master)](https://travis-ci.org/syocy/a-tour-of-go-in-haskell)
 
 # A Tour of Go in Haskell
 
