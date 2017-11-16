@@ -26,6 +26,11 @@ channels:
   postRW: ""
   preNewChan: "Channel instance must be built before use:"
   postNewChan:
-    'When the channel is empty, <code>readChan</code> will block until new value.
-    Even if multiple threads use same channel, any thread can not be blocked indefinitely by fairness guarantee.'
-  example: ""
+    'Different threads can use one channel simultaneously.
+    If a thread try to <code>readChan</code> to empty channel,
+    the thread does not raise error, but just be blocked until new value.
+    By the behavior, we can fall threads in line with each other.'
+  example:
+    'The example code makes lightweight threads calculate sum of <code>Int</code> lists.
+    The main thread waits results from lightweight threads, then use them.'
+  stm: ""
