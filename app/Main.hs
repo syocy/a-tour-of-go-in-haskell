@@ -102,6 +102,10 @@ pages = map toPage
              <> at "stm"
            )
     )
+  , ( "Buffered Channels", "A_Tour_of_Go/Concurrency/BufferedChannels.hs", "concurrency/buffered-channels.html", \i -> do
+        let at = at1 i "bufferedChannels"
+        p_ $ at "first"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]
