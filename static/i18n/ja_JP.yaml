@@ -24,7 +24,7 @@ channels:
   writeChan: "v をチャネル ch の末尾に追加する"
   readChan: "チャネル ch の先頭から値を取り出す"
   postRW: ""
-  preNewChan: "チャネルは使う前に作っておく必要があります:"
+  preNewChan: "チャネルは使う前に作っておく必要があります。"
   postNewChan:
     'ひとつのチャネルへの書き込みと読み出しは異なる複数のスレッドから行うことができます。
     もしチャネルが空のときに <code>readChan</code> しようとしても、

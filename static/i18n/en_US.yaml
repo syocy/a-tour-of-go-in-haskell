@@ -24,7 +24,7 @@ channels:
   writeChan: "Append v to the end of channel ch"
   readChan: "Take one from the top of channel ch"
   postRW: ""
-  preNewChan: "Channel instance must be built before use:"
+  preNewChan: "Channel instance must be built before use."
   postNewChan:
     'Different threads can use one channel simultaneously.
     If a thread try to <code>readChan</code> to empty channel,
