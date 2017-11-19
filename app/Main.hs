@@ -98,6 +98,9 @@ pages = map toPage
           ]
         p_ $ at "postNewChan"
         p_ $ at "example"
+        p_ ( a_ [href_ "https://hackage.haskell.org/package/stm"] "stm"
+             <> at "stm"
+           )
     )
   ]
   where

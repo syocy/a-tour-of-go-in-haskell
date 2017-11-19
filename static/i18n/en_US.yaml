@@ -33,4 +33,6 @@ channels:
   example:
     'The example code makes lightweight threads calculate sum of <code>Int</code> lists.
     The main thread waits results from lightweight threads, then use them.'
-  stm: ""
+  stm:
+    ' package provides another implimentation of channel.
+    STM will be introduced later.'
