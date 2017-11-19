@@ -113,7 +113,7 @@ pagesWindow (x:[]) = [(Nothing, x, Nothing)]
 pagesWindow (x:y:[]) = [(Nothing, x, Just y), (Just x, y, Nothing)]
 pagesWindow a@(x:y:z:xs) = (Nothing, x, Just y) : (pagesWindow' a <> [lastWindow a])
   where
-    windows n xs = transpose (take n (tails xs))
+    windows n xs = take (length xs - n + 1) $ transpose (take n (tails xs))
     pagesWindow' = map (\[x',y',z'] -> (Just x', y', Just z')) . windows 3
     lastWindow = (\(x':y':_) -> (Just y', x', Nothing)) . reverse
 
