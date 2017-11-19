@@ -105,6 +105,9 @@ pages = map toPage
   , ( "Buffered Channels", "A_Tour_of_Go/Concurrency/BufferedChannels.hs", "concurrency/buffered-channels.html", \i -> do
         let at = at1 i "bufferedChannels"
         p_ $ at "first"
+        pre_ $ code_ $ toHtmlRaw $ T.unlines
+          [ "newBoundedChan 100"
+          ]
     )
   ]
   where
