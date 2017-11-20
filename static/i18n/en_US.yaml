@@ -38,4 +38,8 @@ channels:
     STM will be introduced later.'
 
 bufferedChannels:
-  first: ""
+  first: ' package introduces a size-bounded channel.'
+  post:
+    'The reason why we bound channel size is that
+    the production rate of a channel upstream should not be over the consumption rate of a channel downstream.'
+  stm: ' package also have bounded channel: <code>TBQueue</code>'

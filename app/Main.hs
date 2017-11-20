@@ -98,21 +98,24 @@ pages = map toPage
           ]
         p_ $ at "postNewChan"
         p_ $ at "example"
-        p_ ( a_ [href_ "https://hackage.haskell.org/package/stm"] "stm"
-             <> at "stm"
-           )
+        p_ $ stmAnchor <> at "stm"
     )
   , ( "Buffered Channels", "A_Tour_of_Go/Concurrency/BufferedChannels.hs", "concurrency/buffered-channels.html", \i -> do
         let at = at1 i "bufferedChannels"
-        p_ $ at "first"
+        p_ ( a_ [href_ "https://hackage.haskell.org/package/BoundedChan"] "BoundedChan"
+             <> at "first"
+           )
         pre_ $ code_ $ toHtmlRaw $ T.unlines
           [ "newBoundedChan 100"
           ]
+        p_ $ at "post"
+        p_ $ stmAnchor <> at "stm"
     )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]
     at1 i key subKey = toHtmlRaw $ at1' i key subKey
+    stmAnchor = a_ [href_ "https://hackage.haskell.org/package/stm"] "stm"
 
 pagesWindow :: [Page] -> [(Maybe Page, Page, Maybe Page)]
 pagesWindow [] = []
