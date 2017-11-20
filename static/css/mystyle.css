@@ -43,12 +43,12 @@
     /* display: grid;                */
     /* grid-template-columns: 1fr;   */
     /* grid-template-rows: 1fr 48px; */
-    min-height: 500px;
 }
 
 .article {
     /* grid-row: 1 / 2; */
     /* grid-column: 1 / -1; */
+    min-height: 480px;
 }
 
 .pager {
