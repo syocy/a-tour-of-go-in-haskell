@@ -43,3 +43,6 @@ bufferedChannels:
     'The reason why we bound channel size is that
     the production rate of a channel upstream should not be over the consumption rate of a channel downstream.'
   stm: ' package also have bounded channel: <code>TBQueue</code>'
+
+rangeAndClose:
+  first: ""
