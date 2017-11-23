@@ -43,3 +43,23 @@ bufferedChannels:
     チャネルのサイズを制限することで、
     チャネルの下流のスレッドによる消費が追い付かない速度で上流のスレッドが値を作り出すのを抑止できます。'
   stm: ' パッケージにも <code>TBQueue</code> という制限付きチャネルがあります。'
+
+rangeAndClose:
+  first:
+    'Go の <code>range</code> と <code>close</code> に直接相当するものは
+    Haskell にはありませんが、必要であれば簡単に用意することができます。'
+  range:
+    'Go の for 式とともに使う <code>range</code> 句は、
+    チャネルの要素を(ちょうど配列のように)反復処理したいときに役立ちます。
+    Haskell の <code>getChanContents :: Chan a -> IO [a]</code>
+    はチャネルをリストに変換するので同じようなことができます。'
+  close:
+    'Go の組み込み関数 <code>close</code> はチャネルにこれ以上値が送られないことをマークします。
+    <code>close</code> を Haskell で簡単に再現するには <code>Maybe</code> を使い、
+    最後の値として <code>Nothing</code> を送るようにすればよいでしょう。
+    ただしこれはごく簡単な方法なので、すでに <code>Nothing</code>
+    を送ったチャネルに更に値が送られたときエラーを起こすことはできません。
+    そこは少し注意が必要です。'
+  list:
+    '余談ですが、Haskell では右のサンプルコードのようなことがやりたいときにはリストを使う方が素直な書き方になるでしょう。
+    リスト版も載せておきます。'

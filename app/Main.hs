@@ -111,6 +111,13 @@ pages = map toPage
         p_ $ at "post"
         p_ $ stmAnchor <> at "stm"
     )
+  , ( "Range and Close", "A_Tour_of_Go/Concurrency/RangeAndClose.hs", "concurrency/range-and-close.html", \i -> do
+        let at = at1 i "rangeAndClose"
+        p_ $ at "first"
+        p_ $ at "range"
+        p_ $ at "close"
+        p_ $ at "list"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]
