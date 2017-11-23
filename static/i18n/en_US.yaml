@@ -45,4 +45,19 @@ bufferedChannels:
   stm: ' package also have bounded channel: <code>TBQueue</code>'
 
 rangeAndClose:
-  first: ""
+  first:
+    'Altough Haskell does not have things just like <code>range</code> and <code>close</code> of Go,
+    they can easily be composed if you need.'
+  range:
+    '<code>range</code> clause on for statement of Go is useful to iterate channel values like array.
+    Because <code>getChanContents :: Chan a -> IO [a]</code> converts channel to list,
+    it works similar to <code>range</code>.'
+  close:
+    'A built-in function <code>close</code> of Go marks that no more values will be sent to a channel.
+    <code>Maybe</code> will be used to imitate <code>close</code>.
+    We send <code>Nothing</code> as the last value.
+    However this is just a simple solution.
+    Note that it does not cause errors if extra values is sent to a closed channel.'
+  list:
+    'By the way, the sample code on the right side can be written by list of Haskell.
+    Refer to the list version below.'
