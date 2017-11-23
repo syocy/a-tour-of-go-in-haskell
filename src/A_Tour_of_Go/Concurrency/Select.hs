@@ -6,10 +6,7 @@ import Control.Monad (forM_, join)
 import Control.Concurrent.Async (async)
 
 select :: [STM a] -> IO a
-select ms = atomically $ foldl1 snocStm ms
-  where
-    snocStm :: STM a -> STM a -> STM a
-    snocStm prevOnes currentOne = prevOnes `orElse` currentOne
+select stms = atomically $ foldl1 orElse stms
 
 fibonacci :: TQueue Int -> TQueue () -> IO ()
 fibonacci ch quit = loop 0 1
@@ -31,7 +28,7 @@ fibonacci ch quit = loop 0 1
 -- 13
 -- 21
 -- 34
--- quit
+-- "quit"
 main :: IO ()
 main = do
   ch <- atomically $ newTQueue
