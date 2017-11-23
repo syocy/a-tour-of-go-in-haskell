@@ -118,6 +118,10 @@ pages = map toPage
         p_ $ at "close"
         p_ $ at "list"
     )
+  , ( "Select", "A_Tour_of_Go/Concurrency/Select.hs", "concurrency/select.html", \i -> do
+        let at = at1 i "select"
+        p_ $ at "first"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]

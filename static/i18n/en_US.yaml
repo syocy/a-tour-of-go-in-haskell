@@ -62,3 +62,6 @@ rangeAndClose:
   list:
     'By the way, the sample code on the right side can be written by list of Haskell.
     Refer to the list version below.'
+
+select:
+  first: ""
