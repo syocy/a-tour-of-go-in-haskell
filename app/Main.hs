@@ -172,6 +172,7 @@ generateHtmlFiles = do
     forM_ i18ns $ \i18n -> do
       let title = page ^. titleF
       let article = renderText $ (page ^. genArticleF) i18n
+      let anotherLanguage = "../../" <> (if (i18n^.localeF) == "en_US" then "ja_JP" else "en_US") <> "/" <> (page^.targetF)
       let compiled = $(compileTextFile "static/heterocephalus/template.html")
       let targetPath = "target/" <> (i18n^.localeF) <> "/" <> (page^.targetF)
       let targetDirPath = fst $ T.breakOnEnd "/" targetPath
