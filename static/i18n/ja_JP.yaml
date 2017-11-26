@@ -34,7 +34,8 @@ channels:
     'サンプルコードは軽量スレッドに <code>Int</code> リストの合計を計算させています。
     軽量スレッドの計算結果が出揃うのを待ち、メインスレッドでそれらを使います。'
   stm:
-    ' パッケージは別のチャネル実装を提供します。stmについては後ほど説明します。'
+    ' パッケージは別のチャネル実装を提供します。stm については後ほど説明します。
+    今は stm を実行するには <code>atomically</code> 関数を使うとだけ覚えておいてください。'
 
 bufferedChannels:
   first: " パッケージでサイズを制限したチャネルを作ることができます。"
@@ -63,3 +64,25 @@ rangeAndClose:
   list:
     '余談ですが、Haskell では右のサンプルコードのようなことがやりたいときにはリストを使う方が素直な書き方になるでしょう。
     リスト版も載せておきます。'
+
+select:
+  first:
+    'Go の <code>select</code> に直接相当するものは
+    Haskell にはありませんが、必要であれば簡単に用意することができます。'
+  preStm:
+    'Go の <code>select</code> は複数の送信・受信命令のうち、どれか実行可能なものを1つ実行します。'
+  postStm:
+    ' パッケージの <code>orElse :: STM a -> STM a -> STM a</code> 関数は2つの STM 命令のうち実行できるものを実行します。
+    Haskell で2引数関数をリストに拡張するには <code>fold</code> 系の関数を使えば簡単にできます。
+    この実装の注意点として、複数の命令が実行可能な場合は Go のようにランダムセレクトされるのではなく、
+    リストの先頭に近いものが優先されます。
+    また、リスト中の STM 命令の戻り値の型はすべて同じである必要があります。'
+  preMsum:
+    '実は <code>STM</code> 型は <code>MonadPlus</code> クラスのインスタンスなので
+    <code>select</code> は以下のように書くこともできます。'
+  postMsum:
+    '<code>STM</code> 型 の <code>MonadPlus</code> の実装が
+    <code>orElse</code> で書かれているのでこの書き方ができます。
+    ただし <code>MonadPlus</code> の実装が <code>orElse</code>
+    であることはドキュメントに明示的に書かれているわけではないので、
+    この書き方は注意が必要かも知れません。'
