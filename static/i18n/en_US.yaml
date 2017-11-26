@@ -26,7 +26,7 @@ channels:
   postRW: ""
   preNewChan: "Channel instance must be built before use."
   postNewChan:
-    'Different threads can use one channel simultaneously.
+    'Different threads can share one channel.
     If a thread try to <code>readChan</code> to empty channel,
     the thread does not raise error, but just be blocked until new value.
     By the behavior, we can fall threads in line with each other.'
@@ -35,7 +35,8 @@ channels:
     The main thread waits results from lightweight threads, then use them.'
   stm:
     ' package provides another implimentation of channel.
-    STM will be introduced later.'
+    STM will be introduced later.
+    Now keep in mind only that you should use <code>atomically</code> to run stm computations.'
 
 bufferedChannels:
   first: ' package introduces a size-bounded channel.'
@@ -47,7 +48,7 @@ bufferedChannels:
 
 rangeAndClose:
   first:
-    'Altough Haskell does not have things just like <code>range</code> and <code>close</code> of Go,
+    'Although Haskell does not have things just like <code>range</code> and <code>close</code> of Go,
     they can easily be composed if you need.'
   range:
     '<code>range</code> clause on for statement of Go is useful to iterate channel values like array.
@@ -64,4 +65,21 @@ rangeAndClose:
     Refer to the list version below.'
 
 select:
-  first: ""
+  first:
+    'Although Haskell does not have a thing just like <code>select</code>,
+    it can easily be composed if you need.'
+  preStm:
+    '<code>select</code> in Go chooses a available one of multiple communication operations. The '
+  postStm:
+    ' package provides a function <code>orElse :: STM a -> STM a -> STM a</code> which chooses a available one of two stm operations.
+    <code>fold</code> functions in Haskell make two-args function to list function.
+    Note that in a case that multiple operations are available, this implimentation chooses a available operation in order from the beginning.
+    (Go <code>select</code> chooses randomly for that case.)
+    And, all stm operations of the list should be same type.'
+  preMsum:
+    'Actually <code>STM</code> is a instance of <code>MonadPlus</code>.
+    So we can implement <code>select</code> as below.'
+  postMsum:
+    'Because the <code>MonadPlus</code> instance is implemented using <code>orElse</code>,
+    we can write <code>select</code> in this way.
+    Note that the <code>orElse</code> implementation of the <code>MonadPlus</code> instance is not documented explicitly.'

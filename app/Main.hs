@@ -121,6 +121,14 @@ pages = map toPage
   , ( "Select", "A_Tour_of_Go/Concurrency/Select.hs", "concurrency/select.html", \i -> do
         let at = at1 i "select"
         p_ $ at "first"
+        p_ $ at "preStm"  <> stmAnchor <> at "postStm"
+        p_ $ at "preMsum"
+        pre_ $ code_ $ toHtmlRaw $ T.unlines
+          [ "// another implimentation of select"
+          , "import Control.Monad (msum)"
+          , "select = atomically . msum"
+          ]
+        p_ $ at "postMsum"
     )
   ]
   where
