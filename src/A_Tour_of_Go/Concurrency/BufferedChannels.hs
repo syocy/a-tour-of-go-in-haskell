@@ -3,7 +3,8 @@ module A_Tour_of_Go.Concurrency.BufferedChannels where
 import Control.Concurrent.BoundedChan
   (BoundedChan, newBoundedChan, writeChan, readChan)
 import Control.Concurrent.STM
-  (atomically, TBQueue, newTBQueue, readTBQueue, writeTBQueue)
+  ( atomically
+  , TBQueue, newTBQueue, readTBQueue, writeTBQueue )
 
 -- |
 -- >>> main
