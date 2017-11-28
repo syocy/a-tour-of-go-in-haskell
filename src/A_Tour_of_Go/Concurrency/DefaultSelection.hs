@@ -8,7 +8,7 @@ import Control.Concurrent.Async (async, cancel)
 import Control.Monad (forever, join)
 
 select :: [STM a] -> IO a
-select ms = atomically $ foldl1 orElse ms
+select stms = atomically $ foldl1 orElse stms
 
 newTicker :: Int -> IO (TQueue (), IO ())
 newTicker microSec = do
