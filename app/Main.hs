@@ -130,6 +130,10 @@ pages = map toPage
           ]
         p_ $ at "postMsum"
     )
+  , ( "Default Selection", "A_Tour_of_Go/Concurrency/DefaultSelection.hs", "concurrency/default-selection.html", \i -> do
+        let at = at1 i "defaultSelection"
+        p_ $ at "first"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]

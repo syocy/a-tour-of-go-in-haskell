@@ -86,3 +86,6 @@ select:
     ただし <code>MonadPlus</code> の実装が <code>orElse</code>
     であることはドキュメントに明示的に書かれているわけではないので、
     この書き方は注意が必要かも知れません。'
+
+defaultSelection:
+  first: ""

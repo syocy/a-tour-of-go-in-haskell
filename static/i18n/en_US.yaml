@@ -83,3 +83,6 @@ select:
     'Because the <code>MonadPlus</code> instance is implemented using <code>orElse</code>,
     we can write <code>select</code> in this way.
     Note that the <code>orElse</code> implementation of the <code>MonadPlus</code> instance is not documented explicitly.'
+
+defaultSelection:
+  first: ""
