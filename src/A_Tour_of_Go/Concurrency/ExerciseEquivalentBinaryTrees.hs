@@ -2,7 +2,8 @@ module A_Tour_of_Go.Concurrency.ExerciseEquivalentBinaryTrees where
 
 import A_Tour_of_Go.Concurrency.Tree
 
-import Control.Concurrent (Chan, newChan, writeChan, readChan, getChanContents)
+import Control.Concurrent
+  (Chan, newChan, writeChan, readChan, getChanContents)
 import Control.Concurrent.Async (async)
 import Control.Monad (forever, forM, forM_)
 import Data.Maybe (catMaybes, isJust)

@@ -1,8 +1,11 @@
 module A_Tour_of_Go.Concurrency.Channels where
 
-import Control.Concurrent (Chan, newChan, readChan, writeChan)
+import Control.Concurrent
+  (Chan, newChan, readChan, writeChan)
 import Control.Concurrent.Async (async)
-import Control.Concurrent.STM (atomically, TQueue, newTQueue, writeTQueue, readTQueue)
+import Control.Concurrent.STM
+  ( atomically
+  , TQueue, newTQueue, writeTQueue, readTQueue )
 import Prelude hiding (sum)
 import qualified Data.List as L
 
@@ -20,7 +23,8 @@ main = do
   c <- newChan
   async $ sum (drop (length s `div` 2) s) c
   async $ sum (take (length s `div` 2) s) c
-  [x, y] <- sequence [readChan c, readChan c] -- sequence run a list of actions
+  {- `sequence` run a list of actions -}
+  [x, y] <- sequence [readChan c, readChan c]
   print (x, y, x+y)
 
 {- STM version -}
@@ -39,5 +43,6 @@ mainBySTM = do
   c <- atomically $ newTQueue
   async $ sumBySTM (drop (length s `div` 2) s) c
   async $ sumBySTM (take (length s `div` 2) s) c
-  [x, y] <- sequence [atomically (readTQueue c), atomically (readTQueue c)]
+  [x, y] <- sequence [ atomically (readTQueue c)
+                     , atomically (readTQueue c)]
   print (x, y, x+y)

@@ -1,17 +1,14 @@
 module A_Tour_of_Go.Concurrency.DefaultSelection where
 
-import Control.Concurrent.STM ( STM, atomically, orElse
-                              , TQueue, newTQueue, writeTQueue, readTQueue
-                              )
+import Control.Concurrent.STM
+  ( STM, atomically, orElse
+  , TQueue, newTQueue, writeTQueue, readTQueue )
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async (async, cancel)
 import Control.Monad (forever, join)
 
 select :: [STM a] -> IO a
-select ms = atomically $ foldl1 snocStm ms
-  where
-    snocStm :: STM a -> STM a -> STM a
-    snocStm prevOnes currentOne = prevOnes `orElse` currentOne
+select ms = atomically $ foldl1 orElse ms
 
 newTicker :: Int -> IO (TQueue (), IO ())
 newTicker microSec = do

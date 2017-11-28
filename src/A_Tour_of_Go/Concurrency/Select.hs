@@ -1,7 +1,8 @@
 module A_Tour_of_Go.Concurrency.Select where
 
-import Control.Concurrent.STM ( STM, atomically, orElse
-                              , TQueue, newTQueue, readTQueue, writeTQueue )
+import Control.Concurrent.STM
+  ( STM, atomically, orElse
+  , TQueue, newTQueue, readTQueue, writeTQueue )
 import Control.Monad (forM_, join)
 import Control.Concurrent.Async (async)
 
@@ -11,10 +12,10 @@ select stms = atomically $ foldl1 orElse stms
 fibonacci :: TQueue Int -> TQueue () -> IO ()
 fibonacci ch quit = loop 0 1
   where
-    loop x y = do
-      join $ select [ readTQueue quit  >> return (print "quit")
-                    , writeTQueue ch x >> return (loop y (x+y))
-                    ]
+    loop x y = join $ select
+      [ readTQueue quit  >> return (print "quit")
+      , writeTQueue ch x >> return (loop y (x+y))
+      ]
 
 -- |
 -- >>> main
