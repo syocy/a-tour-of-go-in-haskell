@@ -1,14 +1,16 @@
 module A_Tour_of_Go.Concurrency.RangeAndClose where
 
-import Control.Concurrent.BoundedChan ( BoundedChan
-                                      , newBoundedChan, writeChan, readChan
-                                      , getChanContents )
+import Control.Concurrent.BoundedChan
+  ( BoundedChan, newBoundedChan, writeChan, readChan
+  , getChanContents )
 import Control.Concurrent.Async (async)
 import Control.Monad (forM_, foldM_)
 import Data.Maybe (catMaybes, isJust)
 
 range :: BoundedChan (Maybe a) -> IO [a]
-range ch = fmap (catMaybes . takeWhile isJust) $ getChanContents ch
+range ch = fmap extractJust $ getChanContents ch
+  where
+    extractJust = catMaybes . takeWhile isJust
 
 fibonacci :: Int -> BoundedChan (Maybe Int) -> IO ()
 fibonacci n ch = do
@@ -45,10 +47,10 @@ main = do
 {- List version -}
 
 fibonacciByList :: Int -> [Int]
-fibonacciByList n = fibonacciByList' n 0 1
+fibonacciByList n = fib n 0 1
   where
-    fibonacciByList' 0 a _ = []
-    fibonacciByList' n a b = a : fibonacciByList' (n-1) b (a + b)
+    fib 0 a _ = []
+    fib n a b = a : fib (n-1) b (a + b)
 
 -- |
 -- >>> mainByList

@@ -2,7 +2,8 @@ module A_Tour_of_Go.Concurrency.Channels where
 
 import Control.Concurrent (Chan, newChan, readChan, writeChan)
 import Control.Concurrent.Async (async)
-import Control.Concurrent.STM (atomically, TQueue, newTQueue, writeTQueue, readTQueue)
+import Control.Concurrent.STM
+  (atomically, TQueue, newTQueue, writeTQueue, readTQueue)
 import Prelude hiding (sum)
 import qualified Data.List as L
 
