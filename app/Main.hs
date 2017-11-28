@@ -130,6 +130,20 @@ pages = map toPage
           ]
         p_ $ at "postMsum"
     )
+  , ( "Default Selection", "A_Tour_of_Go/Concurrency/DefaultSelection.hs", "concurrency/default-selection.html", \i -> do
+        let at = at1 i "defaultSelection"
+        p_ $ at "first"
+        p_ $ at "preCode"
+        pre_ $ code_ $ toHtmlRaw $ T.unlines
+          [ "select [ readTQueue c >>= (\\i -> return $ do"
+          , "           -- use i"
+          , "           )"
+          , "       , return $ do"
+          , "           -- if `readTQueue c` block"
+          , "       ]"
+          ]
+        p_ $ at "tickAfter"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]

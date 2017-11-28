@@ -83,3 +83,12 @@ select:
     'Because the <code>MonadPlus</code> instance is implemented using <code>orElse</code>,
     we can write <code>select</code> in this way.
     Note that the <code>orElse</code> implementation of the <code>MonadPlus</code> instance is not documented explicitly.'
+
+defaultSelection:
+  first:
+    'The <code>select</code> of Go can include a default case when there is no other available communication.
+    Default case make <code>select</code> non-blocking.'
+  preCode:
+    'In our Haskell-version <code>select</code>, just <code>return</code> at the last of the list.'
+  tickAfter:
+    'The sample code on the right side also implements functions similar to <code>time.Tick</code> and <code>time.After</code> of Go.'
