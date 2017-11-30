@@ -144,6 +144,18 @@ pages = map toPage
           ]
         p_ $ at "tickAfter"
     )
+  , ( "sync.Mutex", "A_Tour_of_Go/Concurrency/SyncMutex.hs", "concurrency/sync-mutex.html", \i -> do
+        let at = at1 i "syncMutex"
+        p_ $ at "first"
+        p_ $ at "mutex"
+        pre_ $ code_ $ toHtmlRaw $ T.unlines
+          [ "var <- newTVar x     -- make new TVar storing x"
+          , "x <- readTvar var    -- read current value from TVar"
+          , "modifyTVar var func  -- modify TVar by func lazily"
+          , "modifyTVar' var func -- modify TVar by func strictly"
+          ]
+        p_ $ at "sample"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]

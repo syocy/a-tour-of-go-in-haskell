@@ -92,3 +92,18 @@ defaultSelection:
     'In our Haskell-version <code>select</code>, just <code>return</code> at the last of the list.'
   tickAfter:
     'The sample code on the right side also implements functions similar to <code>time.Tick</code> and <code>time.After</code> of Go.'
+
+syncMutex:
+  first:
+    'Channel is a useful tool for communication between lightweight threads.
+    But there are other kind of communications which are impossible (or hard) to be solved by channel.
+    For example, a case that threads share a variable and modify it without conflicts.'
+  mutex:
+    'Go provides traditional Mutex for the problem.
+    We can use <code>TVar</code> in the STM toolbox on Haskell.
+    <code>TVar</code> solve the problem directly compared to Mutex.
+    The usage is similar to <code>TQueue</code>.'
+  sample:
+    'The sample code on the right side composes a counter which is safely modified by multiple threads by using <code>TVar</code>.
+    Because the <code>atomically</code> of STM makes a <strong>transaction</strong> (indivisible section),
+    modifying counter do not cause conflicts.'

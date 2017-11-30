@@ -4,7 +4,7 @@ import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async (async)
 import Control.Concurrent.STM
   (atomically, TVar, newTVar, modifyTVar', readTVar)
-import Control.Monad (replicateM_)
+import Control.Monad (forM_)
 import Data.Map.Strict (Map)
 import qualified Data.Map.Strict as Map
 
@@ -33,7 +33,7 @@ value c key = fmap findOr0 $ atomically $ readTVar $ v c
 main :: IO ()
 main = do
   c <- newSafeCounter $ Map.empty
-  replicateM_ 1000 $ do
+  forM_ [1..1000] $ \_ -> do
     async $ inc c "somekey"
   threadDelay $ 10^6
   print =<< value c "somekey"
