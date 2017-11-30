@@ -93,6 +93,12 @@ defaultSelection:
   tickAfter:
     'The sample code on the right side also implements functions similar to <code>time.Tick</code> and <code>time.After</code> of Go.'
 
+equivalentBinaryTrees1:
+  first: ""
+
+equivalentBinaryTrees2:
+  first: ""
+
 syncMutex:
   first:
     'Channel is a useful tool for communication between lightweight threads.

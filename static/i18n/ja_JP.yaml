@@ -96,6 +96,12 @@ defaultSelection:
   tickAfter:
     '右のサンプルコードでは Go の<code>time.Tick</code>および<code>time.After</code>にあたる関数も作っています。'
 
+equivalentBinaryTrees1:
+  first: ""
+
+equivalentBinaryTrees2:
+  first: ""
+
 syncMutex:
   first:
     'これまでチャネルが軽量スレッド間の通信に便利なツールであることを見てきました。
