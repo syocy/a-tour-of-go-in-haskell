@@ -152,7 +152,7 @@ pages = map toPage
           [ "data Tree = Nil | Tree Int Tree Tree"
           ]
     )
-  , ( "Exercise: Equivalent Binary Trees", Just "A_Tour_of_Go/Concurrency/ExerciseEquivalentBinaryTrees.hs", "concurrency/equivalent-binary-trees-2.html", \i -> do
+  , ( "Exercise: Equivalent Binary Trees", Just "A_Tour_of_Go/Concurrency/EquivalentBinaryTrees.hs", "concurrency/equivalent-binary-trees-2.html", \i -> do
         let at = at1 i "equivalentBinaryTrees2"
         p_ $ at "first"
     )
