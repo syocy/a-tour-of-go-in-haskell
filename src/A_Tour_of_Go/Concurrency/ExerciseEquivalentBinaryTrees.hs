@@ -17,10 +17,6 @@ walk tree ch = walk' tree >> writeChan ch Nothing
       writeChan ch $ Just v
       walk' r
 
-walkPure :: Tree -> [Int]
-walkPure Nil = []
-walkPure (Tree v l r) = walkPure l ++ [v] ++ walkPure r
-
 same :: Tree -> Tree -> IO Bool
 same t1 t2 = do
   ch1 <- newChan
@@ -39,9 +35,6 @@ same t1 t2 = do
               then return True
               else loop ch1 ch2
 
-samePure :: Tree -> Tree -> Bool
-samePure t1 t2 = walkPure t1 == walkPure t2
-
 -- |
 -- >>> main
 -- 1,2,3,4,5,6,7,8,9,10,
@@ -59,6 +52,13 @@ main = do
   tree2 <- newTree 2
   print =<< same tree1 tree1'
   print =<< same tree1 tree2
+
+walkPure :: Tree -> [Int]
+walkPure Nil = []
+walkPure (Tree v l r) = walkPure l ++ [v] ++ walkPure r
+
+samePure :: Tree -> Tree -> Bool
+samePure t1 t2 = walkPure t1 == walkPure t2
 
 -- |
 -- >>> mainPure
