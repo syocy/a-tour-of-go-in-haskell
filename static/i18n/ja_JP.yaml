@@ -81,7 +81,7 @@ select:
     '実は <code>STM</code> 型は <code>MonadPlus</code> クラスのインスタンスなので
     <code>select</code> は以下のように書くこともできます。'
   postMsum:
-    '<code>STM</code> 型 の <code>MonadPlus</code> の実装が
+    '<code>STM</code> 型の <code>MonadPlus</code> の実装が
     <code>orElse</code> で書かれているのでこの書き方ができます。
     ただし <code>MonadPlus</code> の実装が <code>orElse</code>
     であることはドキュメントに明示的に書かれているわけではないので、
@@ -94,4 +94,19 @@ defaultSelection:
   preCode:
     '私たちの Haskell 版 <code>select</code> ではリストの最後で単に <code>return</code> すれば同じことができます。'
   tickAfter:
-    '右のサンプルコードでは Go の<code>time.Tick</code>および<code>time.After</code>にあたる関数も作ってます。'
+    '右のサンプルコードでは Go の<code>time.Tick</code>および<code>time.After</code>にあたる関数も作っています。'
+
+syncMutex:
+  first:
+    'これまでチャネルが軽量スレッド間の通信に便利なツールであることを見てきました。
+    しかしチャネルで解決できない (あるいは解決が難しい) 別のユースケースもあります。
+    たとえばスレッドどうしで変数を共有してコンフリクトを起こさずにお互いが書き換える場合です。'
+  mutex:
+    'Go はそういった問題に対して古典的な Mutex を提供しています。
+    Haskell では STM の道具箱に入っている <code>TVar</code> が使えます。
+    <code>TVar</code> の方が Mutex より直接的に問題を解決できます。
+    使い方は <code>TQueue</code> とよく似ています。'
+  sample:
+    '右のサンプルコードでは <code>TVar</code> を使って複数のスレッドから安全に更新可能なカウンターを構築しています。
+    STM の <code>atomically</code> は <strong>トランザクション</strong> (割り込むことのできない処理) を作るので、
+    カウンターの更新がコンフリクトを起こすことはありません。'
