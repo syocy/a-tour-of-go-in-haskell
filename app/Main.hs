@@ -148,6 +148,9 @@ pages = map toPage
         let at = at1 i "equivalentBinaryTrees1"
         p_ $ at "first"
         img_ [src_ "../../images/tree1.svg"]
+        pre_ $ code_ $ toHtmlRaw $ T.unlines
+          [ "data Tree = Nil | Tree Int Tree Tree"
+          ]
     )
   , ( "Exercise: Equivalent Binary Trees", Just "A_Tour_of_Go/Concurrency/ExerciseEquivalentBinaryTrees.hs", "concurrency/equivalent-binary-trees-2.html", \i -> do
         let at = at1 i "equivalentBinaryTrees2"

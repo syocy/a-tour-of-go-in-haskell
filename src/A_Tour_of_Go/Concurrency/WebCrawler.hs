@@ -1,4 +1,4 @@
-module A_Tour_of_Go.Concurrency.ExerciseWebCrawler where
+module A_Tour_of_Go.Concurrency.WebCrawler where
 
 import           Control.Concurrent (threadDelay)
 import           Control.Concurrent.Async (Async, async, wait, cancel, withAsync, forConcurrently_)

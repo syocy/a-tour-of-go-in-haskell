@@ -1,4 +1,4 @@
-module A_Tour_of_Go.Concurrency.ExerciseEquivalentBinaryTrees where
+module A_Tour_of_Go.Concurrency.EquivalentBinaryTrees where
 
 import A_Tour_of_Go.Concurrency.Tree
 
