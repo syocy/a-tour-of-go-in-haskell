@@ -1,5 +1,7 @@
 [![Travis](https://travis-ci.org/syocy/a-tour-of-go-in-haskell.svg?branch=master)](https://travis-ci.org/syocy/a-tour-of-go-in-haskell)
 
+[Here](https://a-tour-of-go-in-haskell.syocy.net) is the site generated from this repository.
+
 # A Tour of Go in Haskell
 
 [A Tour of Go](https://tour.golang.org/) is a famous tutorial of the Go programming language.
