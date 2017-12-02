@@ -37,6 +37,16 @@
     margin: 0;
 }
 
+.top-link {
+    text-decoration: none;
+    color: #222;
+}
+
+.spread {
+    grid-row: 4 / 5;
+    grid-column: 2 / 5;
+}
+
 .left-side {
     grid-row: 4 / 5;
     grid-column: 2 / 3;

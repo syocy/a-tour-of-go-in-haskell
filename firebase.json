@@ -1,6 +1,11 @@
 {
     "hosting": {
         "public": "target",
-        "ignore": []
+        "ignore": [],
+        "redirects": [ {
+            "source": "/*",
+            "destination": "/en_US/",
+            "type": 302
+        } ]
     }
 }

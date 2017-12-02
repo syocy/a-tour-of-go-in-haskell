@@ -66,6 +66,14 @@ toPage (name, src, target, genArticle) =
   <: genArticleF @= genArticle
   <: nil
 
+indexPage :: I18N -> Html ()
+indexPage i = do
+  let at = at1 i "index"
+  p_ $ at "first"
+    where
+      at1' i key subKey = (i ^. dictF) !!! [key, subKey]
+      at1 i key subKey = toHtmlRaw $ at1' i key subKey
+
 pages :: [Page]
 pages = map toPage
   [ ( "Goroutines", Just "A_Tour_of_Go/Concurrency/Goroutines.hs", "concurrency/goroutines.html", \i -> do
@@ -223,6 +231,14 @@ clenseCode = LT.concatMap escape . removeComment
 generateHtmlFiles :: IO ()
 generateHtmlFiles = do
   i18ns <- loadI18NFiles
+  forM_ i18ns $ \i18n -> do
+    mktree $ fromString $ T.unpack $ "target/" <> (i18n^.localeF)
+    let topPage = "../" <> (i18n^.localeF) <> "/"
+    let article = renderText $ indexPage i18n
+    let anotherLanguage = "../" <> (if (i18n^.localeF) == "en_US" then "ja_JP" else "en_US") <> "/" :: T.Text
+    let compiled = $(compileTextFile "static/heterocephalus/index.html")
+    let targetPath = "target/" <> (i18n^.localeF) <> "/index.html"
+    LT.writeFile (T.unpack targetPath) $ renderMarkup compiled
   let lastPageNumber = length pages
   forM_ (zip (pagesWindow pages) ([1..]::[Int])) $ \((prevPageMaybe, page, nextPageMaybe), pageNumber) -> do
     let prevPagePathMaybe = getLastPiece `fmap` prevPageMaybe
@@ -232,6 +248,7 @@ generateHtmlFiles = do
       Nothing -> return ""
       Just src -> clenseCode <$> LT.readFile src
     forM_ i18ns $ \i18n -> do
+      let topPage = "../../" <> (i18n^.localeF) <> "/"
       let title = page ^. titleF
       let article = renderText $ (page ^. genArticleF) i18n
       let anotherLanguage = "../../" <> (if (i18n^.localeF) == "en_US" then "ja_JP" else "en_US") <> "/" <> (page^.targetF)

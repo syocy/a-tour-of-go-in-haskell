@@ -1,6 +1,9 @@
 test:
   message: Hello
 
+index:
+  first: ""
+
 goroutines:
   first: "Haskell has a lightweight thread feature as in Go."
   inter: "starts a new lightweight thread running"

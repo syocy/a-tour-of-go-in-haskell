@@ -1,6 +1,9 @@
 test:
   message: こんにちは
 
+index:
+  first: ""
+
 goroutines:
   first: "Haskell は Go と同じく軽量スレッドの機能を持っています。"
   inter: "これは新しい軽量スレッドを作り、その中で次の処理を起動します。"
