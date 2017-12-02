@@ -3,8 +3,12 @@
         "public": "target",
         "ignore": [],
         "redirects": [ {
-            "source": "/*",
-            "destination": "/en_US/",
+            "source": "/",
+            "destination": "/en_US/index.html",
+            "type": 302
+        }, {
+            "source": "/index.html",
+            "destination": "/en_US/index.html",
             "type": 302
         } ]
     }

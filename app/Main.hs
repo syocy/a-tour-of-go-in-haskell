@@ -233,9 +233,9 @@ generateHtmlFiles = do
   i18ns <- loadI18NFiles
   forM_ i18ns $ \i18n -> do
     mktree $ fromString $ T.unpack $ "target/" <> (i18n^.localeF)
-    let topPage = "../" <> (i18n^.localeF) <> "/"
+    let topPage = "../" <> (i18n^.localeF) <> "/index.html"
     let article = renderText $ indexPage i18n
-    let anotherLanguage = "../" <> (if (i18n^.localeF) == "en_US" then "ja_JP" else "en_US") <> "/" :: T.Text
+    let anotherLanguage = "../" <> (if (i18n^.localeF) == "en_US" then "ja_JP" else "en_US") <> "/index.html" :: T.Text
     let compiled = $(compileTextFile "static/heterocephalus/index.html")
     let targetPath = "target/" <> (i18n^.localeF) <> "/index.html"
     LT.writeFile (T.unpack targetPath) $ renderMarkup compiled
@@ -248,7 +248,7 @@ generateHtmlFiles = do
       Nothing -> return ""
       Just src -> clenseCode <$> LT.readFile src
     forM_ i18ns $ \i18n -> do
-      let topPage = "../../" <> (i18n^.localeF) <> "/"
+      let topPage = "../../" <> (i18n^.localeF) <> "/index.html"
       let title = page ^. titleF
       let article = renderText $ (page ^. genArticleF) i18n
       let anotherLanguage = "../../" <> (if (i18n^.localeF) == "en_US" then "ja_JP" else "en_US") <> "/" <> (page^.targetF)
@@ -265,6 +265,7 @@ copyFiles = do
   cptree "static/css" "target/css"
   mktree "target/images"
   cptree "static/images" "target/images"
+  cp "static/index.html" "target/index.html"
 
 main = do
   generateHtmlFiles
