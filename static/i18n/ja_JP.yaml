@@ -144,3 +144,15 @@ syncMutex:
     '右のサンプルコードでは <code>TVar</code> を使って複数のスレッドから安全に更新可能なカウンターを構築しています。
     STM の <code>atomically</code> は <strong>トランザクション</strong> (割り込むことのできない処理) を作るので、
     カウンターの更新がコンフリクトを起こすことはありません。'
+
+webCrawler:
+  first: 'この例題ではこれまで見てきた並行機能を使って並列ウェブクローラーを実装します。'
+  crawl:
+    '<code>crawl</code> 関数を実装してみましょう。
+    <code>crawl</code> は現在 <code>crawlNaive</code> によって実装されていますが、
+    <code>crawlNaive</code> は並列にウェブページを取得できず、同じURLを2回取得してしまうこともあります。
+    これを正しく動作するように置き換えしょう。'
+  hint:
+    '<em>ヒント</em>: 取得済みのURLのキャッシュは <code>Set</code> で表現し、<code>TVar</code> でスレッド間共有するとよいでしょう。'
+  link:
+    '解答例は <a href="https://github.com/syocy/a-tour-of-go-in-haskell/blob/master/src/A_Tour_of_Go/Concurrency/WebCrawler.hs">こちら</a> にあります。'

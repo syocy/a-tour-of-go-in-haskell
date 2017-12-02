@@ -183,6 +183,13 @@ pages = map toPage
           ]
         p_ $ at "sample"
     )
+  , ( "Exercise: Web Crawler", Just "A_Tour_of_Go/Concurrency/WebCrawlerU.hs", "concurrency/web-crawler.html", \i -> do
+        let at = at1 i "webCrawler"
+        p_ $ at "first"
+        p_ $ at "crawl"
+        p_ $ at "hint"
+        p_ $ at "link"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]
