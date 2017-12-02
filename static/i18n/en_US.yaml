@@ -128,3 +128,9 @@ syncMutex:
     'The sample code on the right side composes a counter which is safely modified by multiple threads by using <code>TVar</code>.
     Because the <code>atomically</code> of STM makes a <strong>transaction</strong> (indivisible section),
     modifying counter do not cause conflicts.'
+
+webCrawler:
+  first: ""
+  crawl: ""
+  hint: ""
+  link: ""

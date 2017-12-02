@@ -1,4 +1,4 @@
-module A_Tour_of_Go.Concurrency.WebCrawler where
+module A_Tour_of_Go.Concurrency.WebCrawlerU where
 
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async
@@ -23,6 +23,7 @@ data FetchResult
 class Fetcher a where
   fetch :: a -> String -> IO FetchResult
 
+{- `crawlNaive` is a naive implementation of `crawl`. -}
 crawlNaive :: (Fetcher f) => String -> Int -> f -> IO ()
 crawlNaive url depth f | depth <= 0 = return ()
                        | otherwise  = do
@@ -34,52 +35,27 @@ crawlNaive url depth f | depth <= 0 = return ()
       forM_ urls $ \url -> do
         crawlNaive url (depth - 1) f
 
+{- Replace implementation of `crawl` to remove url duplications. -}
 crawl :: (Fetcher f) => String -> Int -> f -> IO ()
-crawl url depth f = do
-  cache <- atomically $ newTVar Set.empty
-  retQueue <- atomically $ newTQueue
-  a <- startOutputThread retQueue
-  crawl' url depth f cache retQueue
-  threadDelay $ 10 * 10^3 -- wait last output
-  cancel a
-
-startOutputThread :: TQueue String -> IO (Async ())
-startOutputThread retQueue = async $ forever $ do
-  str <- atomically $ readTQueue retQueue
-  putStrLn str
-
-crawl' :: (Fetcher f)
-  => String -> Int -> f -> TVar (Set String) -> TQueue String -> IO ()
-crawl' url depth f cache retQueue | depth <= 0 = return ()
-                                  | otherwise  = do
-  reserved <- tryReserveUrl url cache
-  when reserved $ do
-    fetchResult <- fetch f url
-    case fetchResult of
-      FetchError mes -> atomically $ writeTQueue retQueue mes
-      Fetched body subUrls -> do
-        atomically $ writeTQueue retQueue
-          $ "found: " ++ url ++ " \"" ++ body ++ "\""
-        forConcurrently_ subUrls $ \subUrl -> do
-          crawl' subUrl (depth - 1) f cache retQueue
-
-tryReserveUrl :: String -> TVar (Set String) -> IO Bool
-tryReserveUrl url cache = atomically $ do
-  noKey <- (not . Set.member url) `fmap` readTVar cache
-  when noKey $ do
-    modifyTVar' cache $ Set.insert url
-  return noKey
+crawl url depth f = crawlNaive url depth f
 
 -- |
 -- >>> main
 -- found: http://golang.org/ "The Go Programming Language"
 -- found: http://golang.org/pkg/ "Packages"
+-- found: http://golang.org/ "The Go Programming Language"
+-- found: http://golang.org/pkg/ "Packages"
+-- not found: http://golang.org/cmd/
 -- not found: http://golang.org/cmd/
 -- found: http://golang.org/pkg/fmt/ "Packages fmt"
+-- found: http://golang.org/ "The Go Programming Language"
+-- found: http://golang.org/pkg/ "Packages"
 -- found: http://golang.org/pkg/os/ "Packages os"
+-- found: http://golang.org/ "The Go Programming Language"
+-- found: http://golang.org/pkg/ "Packages"
+-- not found: http://golang.org/cmd/
 main :: IO ()
 main = do
-  -- crawlNaive "http://golang.org/" 4 fetcher
   crawl "http://golang.org/" 4 fetcher
 
 data FakeResult = FakeResult
