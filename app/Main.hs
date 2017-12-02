@@ -190,6 +190,10 @@ pages = map toPage
         p_ $ at "hint"
         p_ $ at "link"
     )
+  , ( "Further more...", Nothing, "concurrency/further-more.html", \i -> do
+        let at = at1 i "furtherMore"
+        p_ $ at "first"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]

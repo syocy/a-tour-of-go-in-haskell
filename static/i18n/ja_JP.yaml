@@ -156,3 +156,6 @@ webCrawler:
     '<em>ヒント</em>: 取得済みのURLのキャッシュは <code>Set</code> で表現し、<code>TVar</code> でスレッド間共有するとよいでしょう。'
   link:
     '解答例は <a href="https://github.com/syocy/a-tour-of-go-in-haskell/blob/master/src/A_Tour_of_Go/Concurrency/WebCrawler.hs">こちら</a> にあります。'
+
+furtherMore:
+  first: ""
