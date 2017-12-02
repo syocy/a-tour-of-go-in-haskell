@@ -6,7 +6,7 @@ index:
   welcome:
     'Welcome to a tour of Go in Haskell.
     This site will show how to write the
-    <a href="https://tour.golang.org">concurrency</a> section of
+    <a href="https://tour.golang.org/concurrency">concurrency</a> section of
     <a href="https://tour.golang.org">A Tour of Go</a> in Haskell.
     <em>A Tour of Go</em> is a famous tutorial of Go.
     Haskell has concurrency features similar to Go: <em>lightweight thread</em>, <em>channel</em>, etc..
