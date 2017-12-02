@@ -97,10 +97,51 @@ defaultSelection:
     '右のサンプルコードでは Go の<code>time.Tick</code>および<code>time.After</code>にあたる関数も作っています。'
 
 equivalentBinaryTrees1:
-  first: ""
+  first:
+    '二分木は同じ要素を持っていても異なる形状になり得ます。たとえば以下の2つの二分木は同じ要素を保持しています。'
+  function:
+    'これまで見てきた並行性のテクニックを用いて、異なる形状の2つの二分木が同じ要素を保持するかチェックする関数を作ってみましょう。'
+  tree:
+    '二分木の抽象データ型は以下のものを使います。'
+  next:
+    '次のページに続きます。'
+
+        # p_ $ at "implementWalk"
+        # p_ $ at "testWalk"
+        # p_ $ at "newTree"
+        # pre_ $ code_ $ toHtmlRaw $ T.unlines
+        #   [ "tree1 <- newTree 1"
+        #   , "async $ walk tree1 ch"
+        #   ]
+        # p_ $ at "printTree"
+        # p_ $ at "implementSame"
+        # p_ $ at "testSame"
+        # p_ $ at "link"
+
 
 equivalentBinaryTrees2:
-  first: ""
+  implementWalk: '<code>walk</code> を実装しましょう。'
+  testWalk: '<code>walk</code> をテストしましょう。'
+  newTree:
+    '関数 <code>newTree :: Int -> IO Tree</code> は引数 <code>k::Int</code> をもとに
+    <code>k,2k,3k,..,10k</code> の要素を持つランダムな二分木を構築します。
+    新しい二分木を作って <code>walk</code> を実行するには以下のようにします。'
+  printTree: 'チャネルから値を読んでプリントすると <code>1,2,3,...,10</code> と表示されるべきです。'
+  implementSame: '<code>walk</code> を使って <code>same</code> を実装しましょう。'
+  testSame:
+    "<code>same</code>をテストしましょう。<br/>
+    <code>t1<-newTree 1; t1'<-newTree 1; same t1 t1'</code> は <code>True</code> を返し、<br/>
+    <code>t1<-newTree 1; t2'<-newTree 2; same t1 t2</code> は <code>False</code> を返すべきです。"
+  link:
+    '実際の <code>Tree</code> や <code>newTree</code> の実装は
+    <a href="https://github.com/syocy/a-tour-of-go-in-haskell/blob/master/src/A_Tour_of_Go/Concurrency/Tree.hs">こちら</a>、
+    解答例は
+    <a href="https://github.com/syocy/a-tour-of-go-in-haskell/blob/master/src/A_Tour_of_Go/Concurrency/EquivalentBinaryTrees.hs">こちら</a>
+    にあります。'
+  pure:
+    '(余談: A Tour of Go では、Go はチャネルがあることによって多くの他の言語よりこのアルゴリズムを記述しやすいと主張されていますが、
+    Haskell の場合は純粋なリストを使うことでチャネルを使うよりシンプルに書けます。
+    右のコードの後半にリストによる実装を示します。)'
 
 syncMutex:
   first:

@@ -148,13 +148,28 @@ pages = map toPage
         let at = at1 i "equivalentBinaryTrees1"
         p_ $ at "first"
         img_ [src_ "../../images/tree1.svg"]
+        p_ $ at "function"
+        p_ $ at "tree"
         pre_ $ code_ $ toHtmlRaw $ T.unlines
           [ "data Tree = Nil | Tree Int Tree Tree"
           ]
+        p_ $ at "next"
     )
-  , ( "Exercise: Equivalent Binary Trees", Just "A_Tour_of_Go/Concurrency/EquivalentBinaryTrees.hs", "concurrency/equivalent-binary-trees-2.html", \i -> do
+  , ( "Exercise: Equivalent Binary Trees", Just "A_Tour_of_Go/Concurrency/EquivalentBinaryTreesU.hs", "concurrency/equivalent-binary-trees-2.html", \i -> do
         let at = at1 i "equivalentBinaryTrees2"
-        p_ $ at "first"
+        ol_ $ do
+          li_ $ at "implementWalk"
+          li_ $ at "testWalk"
+          p_ $ at "newTree"
+          pre_ $ code_ $ toHtmlRaw $ T.unlines
+            [ "t1 <- newTree 1"
+            , "async $ walk t1 ch"
+            ]
+          p_ $ at "printTree"
+          li_ $ at "implementSame"
+          li_ $ at "testSame"
+        p_ $ at "link"
+        p_ $ at "pure"
     )
   , ( "sync.Mutex", Just "A_Tour_of_Go/Concurrency/SyncMutex.hs", "concurrency/sync-mutex.html", \i -> do
         let at = at1 i "syncMutex"

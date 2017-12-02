@@ -45,7 +45,8 @@ main = do
   ch <- newChan
   tree1 <- newTree 1
   async $ walk tree1 ch
-  ch' <- (catMaybes . takeWhile isJust) `fmap` getChanContents ch
+  let extractJust = catMaybes . takeWhile isJust
+  ch' <- fmap extractJust $ getChanContents ch
   forM_ ch' $ \x -> putStr (show x ++ ",")
   putStrLn ""
   tree1' <- newTree 1
