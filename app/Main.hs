@@ -190,6 +190,13 @@ pages = map toPage
         p_ $ at "hint"
         p_ $ at "link"
     )
+  , ( "Further more...", Nothing, "concurrency/further-more.html", \i -> do
+        let at = at1 i "furtherMore"
+        p_ $ at "first"
+        p_ $ a_ [href_ "https://hackage.haskell.org/package/parallel"] "parallel" <> at "eval"
+        p_ $ a_ [href_ "https://hackage.haskell.org/package/monad-par"] "monad-par" <> at "par"
+        p_ $ at "book"
+    )
   ]
   where
     at1' i key subKey = (i ^. dictF) !!! [key, subKey]

@@ -134,3 +134,9 @@ webCrawler:
   crawl: ""
   hint: ""
   link: ""
+
+furtherMore:
+  first: ""
+  eval: ""
+  par: ""
+  book: ""
