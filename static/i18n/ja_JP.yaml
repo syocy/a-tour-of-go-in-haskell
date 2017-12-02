@@ -106,19 +106,6 @@ equivalentBinaryTrees1:
   next:
     '次のページに続きます。'
 
-        # p_ $ at "implementWalk"
-        # p_ $ at "testWalk"
-        # p_ $ at "newTree"
-        # pre_ $ code_ $ toHtmlRaw $ T.unlines
-        #   [ "tree1 <- newTree 1"
-        #   , "async $ walk tree1 ch"
-        #   ]
-        # p_ $ at "printTree"
-        # p_ $ at "implementSame"
-        # p_ $ at "testSame"
-        # p_ $ at "link"
-
-
 equivalentBinaryTrees2:
   implementWalk: '<code>walk</code> を実装しましょう。'
   testWalk: '<code>walk</code> をテストしましょう。'
