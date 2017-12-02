@@ -1,6 +1,25 @@
 test:
   message: こんにちは
 
+index:
+  title: "A Tour of Go in Haskell へようこそ"
+  welcome:
+    'A Tour of Go in Haskell へようこそ。
+    このサイトは、Go の有名なチュートリアル
+    <a href="https://tour.golang.org">A Tour of Go</a>
+    の
+    <a href="https://tour.golang.org/concurrency">並行性</a>
+    の章を Haskell でやってみるというものです。
+    Haskell は Go と同じく <em>軽量スレッド</em> や <em>チャネル</em> といった並行処理の機能を持っています。
+    そのため Haskell で Go と同じ処理を記述して2つを見比べてみるのは興味深いことでしょう。'
+  start: '<a href="concurrency/goroutines.html">ここ</a>から始めましょう。'
+  haskell:
+    '<em>Haskellに詳しい方へ</em>: このサイトでは Go との対比を分かりやすくするため、もっぱら
+    async, stm などのパッケージを使って IO の中で明示的に並行性を扱います。
+    Evalモナド、Parモナドなどは扱いません。
+    また、Haskell ユーザでない人の分かりやすさのために、意図的にユーティリティ関数の使用を避けたりポイントフリーではない記述をしている部分があります。'
+  toc: "目次"
+
 goroutines:
   first: "Haskell は Go と同じく軽量スレッドの機能を持っています。"
   inter: "これは新しい軽量スレッドを作り、その中で次の処理を起動します。"

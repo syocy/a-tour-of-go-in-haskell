@@ -1,6 +1,26 @@
 test:
   message: Hello
 
+index:
+  title: "Welcome to a tour of Go in Haskell"
+  welcome:
+    'Welcome to a tour of Go in Haskell.
+    This site will show how to write the
+    <a href="https://tour.golang.org">concurrency</a> section of
+    <a href="https://tour.golang.org">A Tour of Go</a> in Haskell.
+    <em>A Tour of Go</em> is a famous tutorial of Go.
+    Haskell has concurrency features similar to Go: <em>lightweight thread</em>, <em>channel</em>, etc..
+    So it should be interesting that to compare equivalent concurrent programs in Haskell and Go.'
+  start: "Let's get started from <a href=\"concurrency/goroutines.html\">here</a>."
+  haskell:
+    '<em>For Haskell users</em> : In order to clear contrast with Go,
+    this site exclusively uses the async package and the stm package for concurrency.
+    So concurrency is represented explicitly and used in IO.
+    Eval monad and Par monad are not used.
+    And, in order to make easy to understand for non-Haskell users,
+    several famous utility functions and too much point-free style are avoided.'
+  toc: "Table of Contents"
+
 goroutines:
   first: "Haskell has a lightweight thread feature as in Go."
   inter: "starts a new lightweight thread running"
