@@ -1,4 +1,4 @@
-module A_Tour_of_Go.Concurrency.ExerciseEquivalentBinaryTrees where
+module A_Tour_of_Go.Concurrency.EquivalentBinaryTrees where
 
 import A_Tour_of_Go.Concurrency.Tree
 
@@ -16,10 +16,6 @@ walk tree ch = walk' tree >> writeChan ch Nothing
       walk' l
       writeChan ch $ Just v
       walk' r
-
-walkPure :: Tree -> [Int]
-walkPure Nil = []
-walkPure (Tree v l r) = walkPure l ++ [v] ++ walkPure r
 
 same :: Tree -> Tree -> IO Bool
 same t1 t2 = do
@@ -39,9 +35,6 @@ same t1 t2 = do
               then return True
               else loop ch1 ch2
 
-samePure :: Tree -> Tree -> Bool
-samePure t1 t2 = walkPure t1 == walkPure t2
-
 -- |
 -- >>> main
 -- 1,2,3,4,5,6,7,8,9,10,
@@ -52,13 +45,21 @@ main = do
   ch <- newChan
   tree1 <- newTree 1
   async $ walk tree1 ch
-  ch' <- (catMaybes . takeWhile isJust) `fmap` getChanContents ch
+  let extractJust = catMaybes . takeWhile isJust
+  ch' <- fmap extractJust $ getChanContents ch
   forM_ ch' $ \x -> putStr (show x ++ ",")
   putStrLn ""
   tree1' <- newTree 1
   tree2 <- newTree 2
   print =<< same tree1 tree1'
   print =<< same tree1 tree2
+
+walkPure :: Tree -> [Int]
+walkPure Nil = []
+walkPure (Tree v l r) = walkPure l ++ [v] ++ walkPure r
+
+samePure :: Tree -> Tree -> Bool
+samePure t1 t2 = walkPure t1 == walkPure t2
 
 -- |
 -- >>> mainPure

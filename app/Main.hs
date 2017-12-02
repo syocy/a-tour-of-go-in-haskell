@@ -53,12 +53,12 @@ loadI18NFiles = do
 mkField "titleF srcF targetF genArticleF"
 type Page = Record
   [ "titleF" :> T.Text
-  , "srcF" :> T.Text
+  , "srcF" :> Maybe T.Text
   , "targetF" :> T.Text
   , "genArticleF" :> (I18N -> Html ())
   ]
 
-toPage :: (T.Text, T.Text, T.Text, I18N -> Html ()) -> Page
+toPage :: (T.Text, Maybe T.Text, T.Text, I18N -> Html ()) -> Page
 toPage (name, src, target, genArticle) =
   titleF @= name
   <: srcF @= src
@@ -68,7 +68,7 @@ toPage (name, src, target, genArticle) =
 
 pages :: [Page]
 pages = map toPage
-  [ ( "Goroutines", "A_Tour_of_Go/Concurrency/Goroutines.hs", "concurrency/goroutines.html", \i -> do
+  [ ( "Goroutines", Just "A_Tour_of_Go/Concurrency/Goroutines.hs", "concurrency/goroutines.html", \i -> do
         let at = at1 i "goroutines"
         p_ $ at "first"
         pre_ $ code_ "async $ f x y z"
@@ -83,7 +83,7 @@ pages = map toPage
              <> at "detailPostBase"
            )
     )
-  , ( "Channels", "A_Tour_of_Go/Concurrency/Channels.hs", "concurrency/channels.html", \i -> do
+  , ( "Channels", Just "A_Tour_of_Go/Concurrency/Channels.hs", "concurrency/channels.html", \i -> do
         let at = at1 i "channels"
         let at' = at1' i "channels"
         p_ $ at "first"
@@ -100,7 +100,7 @@ pages = map toPage
         p_ $ at "example"
         p_ $ stmAnchor <> at "stm"
     )
-  , ( "Buffered Channels", "A_Tour_of_Go/Concurrency/BufferedChannels.hs", "concurrency/buffered-channels.html", \i -> do
+  , ( "Buffered Channels", Just "A_Tour_of_Go/Concurrency/BufferedChannels.hs", "concurrency/buffered-channels.html", \i -> do
         let at = at1 i "bufferedChannels"
         p_ ( a_ [href_ "https://hackage.haskell.org/package/BoundedChan"] "BoundedChan"
              <> at "first"
@@ -111,14 +111,14 @@ pages = map toPage
         p_ $ at "post"
         p_ $ stmAnchor <> at "stm"
     )
-  , ( "Range and Close", "A_Tour_of_Go/Concurrency/RangeAndClose.hs", "concurrency/range-and-close.html", \i -> do
+  , ( "Range and Close", Just "A_Tour_of_Go/Concurrency/RangeAndClose.hs", "concurrency/range-and-close.html", \i -> do
         let at = at1 i "rangeAndClose"
         p_ $ at "first"
         p_ $ at "range"
         p_ $ at "close"
         p_ $ at "list"
     )
-  , ( "Select", "A_Tour_of_Go/Concurrency/Select.hs", "concurrency/select.html", \i -> do
+  , ( "Select", Just "A_Tour_of_Go/Concurrency/Select.hs", "concurrency/select.html", \i -> do
         let at = at1 i "select"
         p_ $ at "first"
         p_ $ at "preStm"  <> stmAnchor <> at "postStm"
@@ -130,7 +130,7 @@ pages = map toPage
           ]
         p_ $ at "postMsum"
     )
-  , ( "Default Selection", "A_Tour_of_Go/Concurrency/DefaultSelection.hs", "concurrency/default-selection.html", \i -> do
+  , ( "Default Selection", Just "A_Tour_of_Go/Concurrency/DefaultSelection.hs", "concurrency/default-selection.html", \i -> do
         let at = at1 i "defaultSelection"
         p_ $ at "first"
         p_ $ at "preCode"
@@ -144,7 +144,34 @@ pages = map toPage
           ]
         p_ $ at "tickAfter"
     )
-  , ( "sync.Mutex", "A_Tour_of_Go/Concurrency/SyncMutex.hs", "concurrency/sync-mutex.html", \i -> do
+  , ( "Exercise: Equivalent Binary Trees", Nothing, "concurrency/equivalent-binary-trees-1.html", \i -> do
+        let at = at1 i "equivalentBinaryTrees1"
+        p_ $ at "first"
+        img_ [src_ "../../images/tree1.svg"]
+        p_ $ at "function"
+        p_ $ at "tree"
+        pre_ $ code_ $ toHtmlRaw $ T.unlines
+          [ "data Tree = Nil | Tree Int Tree Tree"
+          ]
+        p_ $ at "next"
+    )
+  , ( "Exercise: Equivalent Binary Trees", Just "A_Tour_of_Go/Concurrency/EquivalentBinaryTreesU.hs", "concurrency/equivalent-binary-trees-2.html", \i -> do
+        let at = at1 i "equivalentBinaryTrees2"
+        ol_ $ do
+          li_ $ at "implementWalk"
+          li_ $ at "testWalk"
+          p_ $ at "newTree"
+          pre_ $ code_ $ toHtmlRaw $ T.unlines
+            [ "t1 <- newTree 1"
+            , "async $ walk t1 ch"
+            ]
+          p_ $ at "printTree"
+          li_ $ at "implementSame"
+          li_ $ at "testSame"
+        p_ $ at "link"
+        p_ $ at "pure"
+    )
+  , ( "sync.Mutex", Just "A_Tour_of_Go/Concurrency/SyncMutex.hs", "concurrency/sync-mutex.html", \i -> do
         let at = at1 i "syncMutex"
         p_ $ at "first"
         p_ $ at "mutex"
@@ -193,8 +220,10 @@ generateHtmlFiles = do
   forM_ (zip (pagesWindow pages) ([1..]::[Int])) $ \((prevPageMaybe, page, nextPageMaybe), pageNumber) -> do
     let prevPagePathMaybe = getLastPiece `fmap` prevPageMaybe
     let nextPagePathMaybe = getLastPiece `fmap` nextPageMaybe
-    rawCode <- LT.readFile $ T.unpack $ "src/" <> (page ^. srcF)
-    let code = clenseCode rawCode
+    let srcM = (T.unpack . ("src/"<>)) <$> (page ^. srcF)
+    code <- case srcM of
+      Nothing -> return ""
+      Just src -> clenseCode <$> LT.readFile src
     forM_ i18ns $ \i18n -> do
       let title = page ^. titleF
       let article = renderText $ (page ^. genArticleF) i18n

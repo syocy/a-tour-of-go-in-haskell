@@ -93,6 +93,27 @@ defaultSelection:
   tickAfter:
     'The sample code on the right side also implements functions similar to <code>time.Tick</code> and <code>time.After</code> of Go.'
 
+equivalentBinaryTrees1:
+  first:
+    'Different binary trees storing same elements can be different shapes.
+    Following two binary trees have same elements.'
+  function:
+    'Using concurrency techniques we have seen, make a function to check whether two binary trees store same elements.'
+  tree:
+    'Here is the abstract data type of binary trees.'
+  next:
+    'See the next page.'
+
+equivalentBinaryTrees2:
+  implementWalk: ""
+  testWalk: ""
+  newTree: ""
+  printTree: ""
+  implementSame: ""
+  testSame: ""
+  link: ""
+  pure: ""
+
 syncMutex:
   first:
     'Channel is a useful tool for communication between lightweight threads.

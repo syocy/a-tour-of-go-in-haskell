@@ -24,9 +24,10 @@ library
                      , A_Tour_of_Go.Concurrency.Select
                      , A_Tour_of_Go.Concurrency.DefaultSelection
                      , A_Tour_of_Go.Concurrency.Tree
-                     , A_Tour_of_Go.Concurrency.ExerciseEquivalentBinaryTrees
+                     , A_Tour_of_Go.Concurrency.EquivalentBinaryTrees
+                     , A_Tour_of_Go.Concurrency.EquivalentBinaryTreesU
                      , A_Tour_of_Go.Concurrency.SyncMutex
-                     , A_Tour_of_Go.Concurrency.ExerciseWebCrawler
+                     , A_Tour_of_Go.Concurrency.WebCrawler
   build-depends:       base >= 4.7 && < 5
                      , async >= 2.1
                      , stm >= 2.4
