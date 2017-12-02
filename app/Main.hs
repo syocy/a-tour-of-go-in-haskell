@@ -66,13 +66,23 @@ toPage (name, src, target, genArticle) =
   <: genArticleF @= genArticle
   <: nil
 
-indexPage :: I18N -> Html ()
-indexPage i = do
+indexPage :: [Page] -> I18N -> Html ()
+indexPage pages i = do
   let at = at1 i "index"
-  p_ $ at "first"
+  h4_ $ at "title"
+  p_ $ at "welcome"
+  p_ $ at "start"
+  p_ $ at "haskell"
+  h5_ $ at "toc"
+  ol_ [] $ foldl1 (<>) $ map genLink pages
     where
       at1' i key subKey = (i ^. dictF) !!! [key, subKey]
       at1 i key subKey = toHtmlRaw $ at1' i key subKey
+      genLink :: Page -> Html ()
+      genLink page =
+        let url = page^.targetF in
+        let title = toHtmlRaw $ page^.titleF in
+        li_ $ a_ [href_ url] $ title
 
 pages :: [Page]
 pages = map toPage
@@ -152,7 +162,7 @@ pages = map toPage
           ]
         p_ $ at "tickAfter"
     )
-  , ( "Exercise: Equivalent Binary Trees", Nothing, "concurrency/equivalent-binary-trees-1.html", \i -> do
+  , ( "Exercise: Equivalent Binary Trees (1/2)", Nothing, "concurrency/equivalent-binary-trees-1.html", \i -> do
         let at = at1 i "equivalentBinaryTrees1"
         p_ $ at "first"
         img_ [src_ "../../images/tree1.svg"]
@@ -163,7 +173,7 @@ pages = map toPage
           ]
         p_ $ at "next"
     )
-  , ( "Exercise: Equivalent Binary Trees", Just "A_Tour_of_Go/Concurrency/EquivalentBinaryTreesU.hs", "concurrency/equivalent-binary-trees-2.html", \i -> do
+  , ( "Exercise: Equivalent Binary Trees (2/2)", Just "A_Tour_of_Go/Concurrency/EquivalentBinaryTreesU.hs", "concurrency/equivalent-binary-trees-2.html", \i -> do
         let at = at1 i "equivalentBinaryTrees2"
         ol_ $ do
           li_ $ at "implementWalk"
@@ -234,7 +244,7 @@ generateHtmlFiles = do
   forM_ i18ns $ \i18n -> do
     mktree $ fromString $ T.unpack $ "target/" <> (i18n^.localeF)
     let topPage = "../" <> (i18n^.localeF) <> "/index.html"
-    let article = renderText $ indexPage i18n
+    let article = renderText $ indexPage pages i18n
     let anotherLanguage = "../" <> (if (i18n^.localeF) == "en_US" then "ja_JP" else "en_US") <> "/index.html" :: T.Text
     let compiled = $(compileTextFile "static/heterocephalus/index.html")
     let targetPath = "target/" <> (i18n^.localeF) <> "/index.html"
