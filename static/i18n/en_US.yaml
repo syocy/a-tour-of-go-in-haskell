@@ -76,10 +76,9 @@ rangeAndClose:
     it works similar to <code>range</code>.'
   close:
     'A built-in function <code>close</code> of Go marks that no more values will be sent to a channel.
-    <code>Maybe</code> will be used to imitate <code>close</code>.
+    <code>Maybe</code> can be used to imitate <code>close</code>.
     We send <code>Nothing</code> as the last value.
-    However this is just a simple solution.
-    Note that it does not cause errors if extra values is sent to a closed channel.'
+    Note that this is just a simple solution; it does not cause errors like Go if extra values are sent to a closed channel.'
   list:
     'By the way, the sample code on the right side can be written by list of Haskell.
     Refer to the list version below.'
@@ -89,20 +88,21 @@ select:
     'Although Haskell does not have a thing just like <code>select</code>,
     it can easily be composed if you need.'
   preStm:
-    '<code>select</code> in Go chooses a available one of multiple communication operations. The '
+    '<code>select</code> in Go chooses a available one of communication operations. The '
   postStm:
     ' package provides a function <code>orElse :: STM a -> STM a -> STM a</code> which chooses a available one of two stm operations.
     <code>fold</code> functions in Haskell make two-args function to list function.
-    Note that in a case that multiple operations are available, this implimentation chooses a available operation in order from the beginning.
+    Note that when multiple operations are available simultaneously, this implimentation chooses a available operation in order from the beginning.
     (Go <code>select</code> chooses randomly for that case.)
-    And, all stm operations of the list should be same type.'
+    And, all stm operations of the list must be a same type.'
   preMsum:
     'Actually <code>STM</code> is a instance of <code>MonadPlus</code>.
     So we can implement <code>select</code> as below.'
   postMsum:
     'Because the <code>MonadPlus</code> instance is implemented using <code>orElse</code>,
     we can write <code>select</code> in this way.
-    Note that the <code>orElse</code> implementation of the <code>MonadPlus</code> instance is not documented explicitly.'
+    But it is not documented explicitly that the <code>MonadPlus</code> instance is implemented by <code>orElse</code>.
+    You should avoid to implement <code>select</code> by <code>MonadPlus</code>.'
 
 defaultSelection:
   first:
