@@ -163,10 +163,18 @@ syncMutex:
     modifying counter do not cause conflicts.'
 
 webCrawler:
-  first: ""
-  crawl: ""
-  hint: ""
-  link: ""
+  first: "In this exercise, we will implement a parallel web crawler by using concurrent features we've seen."
+  crawl:
+    'Implement <code>crawl</code>.
+    Currently <code>crawl</code> is implemented by <code>crawlNaive</code>, which fetches web pages in serial (not parallel),
+    and sometimes fetches same URL multiple times.
+    Replace it to make <code>crawl</code> work correctly.'
+  hint:
+    '<em>Hint</em>: You may want to represent a cache of fetched URLs as <code>Set</code>,
+    and share it between threads by using <code>TVar</code>.'
+  link:
+    'An example solution is
+    <a href="https://github.com/syocy/a-tour-of-go-in-haskell/blob/master/src/A_Tour_of_Go/Concurrency/WebCrawler.hs">here</a>.'
 
 furtherMore:
   first: ""
