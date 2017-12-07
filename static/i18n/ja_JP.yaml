@@ -137,7 +137,7 @@ equivalentBinaryTrees2:
   testSame:
     "<code>same</code>をテストしましょう。<br/>
     <code>t1<-newTree 1; t1'<-newTree 1; same t1 t1'</code> は <code>True</code> を返し、<br/>
-    <code>t1<-newTree 1; t2'<-newTree 2; same t1 t2</code> は <code>False</code> を返すべきです。"
+    <code>t1<-newTree 1; t2<-newTree 2; same t1 t2</code> は <code>False</code> を返すべきです。"
   link:
     '実際の <code>Tree</code> や <code>newTree</code> の実装は
     <a href="https://github.com/syocy/a-tour-of-go-in-haskell/blob/master/src/A_Tour_of_Go/Concurrency/Tree.hs">こちら</a>、
