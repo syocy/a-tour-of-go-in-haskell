@@ -285,6 +285,7 @@ copyFiles = do
   mktree "target/images"
   cptree "static/images" "target/images"
   cp "static/index.html" "target/index.html"
+  cp "static/favicon.png" "target/favicon.png"
 
 main = do
   generateHtmlFiles
