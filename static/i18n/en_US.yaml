@@ -125,14 +125,27 @@ equivalentBinaryTrees1:
     'See the next page.'
 
 equivalentBinaryTrees2:
-  implementWalk: ""
-  testWalk: ""
-  newTree: ""
-  printTree: ""
-  implementSame: ""
-  testSame: ""
-  link: ""
-  pure: ""
+  implementWalk: 'Implement <code>walk</code> .'
+  testWalk: 'Test <code>walk</code> .'
+  newTree:
+    'A function <code>newTree :: Int -> IO Tree</code> randomly constructs a binary tree which has
+    <code>k,2k,3k,..,10k</code> as elements, where <code>k::Int</code> is the argument.
+    You can <code>walk</code> on a new binary tree as:'
+  printTree: 'If you read and print values from the channel, <code>1,2,3,..,10</code> should be appeared.'
+  implementSame: 'Implement <code>same</code> using <code>walk</code> .'
+  testSame:
+    "Test <code>same</code> .<br/>
+    <code>t1<-newTree 1; t1'<-newTree 1; sae t1 t1'</code> should return <code>True</code>, and<br/>
+    <code>t1<-newTree 1; t2<-newTree 2; same t1 t2</code> should return <code>False</code> ."
+  link:
+    'Actual implementations of <code>Tree</code> and <code>newTree</code> is
+    <a href="https://github.com/syocy/a-tour-of-go-in-haskell/blob/master/src/A_Tour_of_Go/Concurrency/Tree.hs">here</a>.
+    An example solution is
+    <a href="https://github.com/syocy/a-tour-of-go-in-haskell/blob/master/src/A_Tour_of_Go/Concurrency/EquivalentBinaryTrees.hs">here</a>.'
+  pure:
+    '(Off topic: A Tour of Go emphasizes that we can write this algorithm easiar than other languages because Go has channels.
+    In Haskell, pure lists make it easier rather than channels.
+    A sample code on the right side also shows a list implementation.)'
 
 syncMutex:
   first:
