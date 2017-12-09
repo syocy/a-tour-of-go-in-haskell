@@ -10,68 +10,69 @@ index:
     <a href="https://tour.golang.org">A Tour of Go</a> in Haskell.
     <em>A Tour of Go</em> is a famous tutorial of Go.
     Haskell has concurrency features similar to Go: <em>lightweight thread</em>, <em>channel</em>, etc..
-    So it should be interesting that to compare equivalent concurrent programs in Haskell and Go.'
+    So it should be interesting to compare equivalent concurrent programs in Haskell and Go.'
   start: "Let's get started from <a href=\"concurrency/goroutines.html\">here</a>."
   haskell:
-    '<em>For Haskell users</em> : In order to clear contrast with Go,
+    '<em>For Haskell users</em> : In order to show the similarities with Go clearly,
     this site exclusively uses the async package and the stm package for concurrency.
-    So concurrency is represented explicitly and used in IO.
+    Concurrency is represented explicitly and used in IO.
     Eval monad and Par monad are not used.
-    And, in order to make easy to understand for non-Haskell users,
-    several famous utility functions and too much point-free style are avoided.'
+    And, in order to make it easier for non-Haskell users,
+    several famous utility functions and excessive point-free style are avoided.'
   toc: "Table of Contents"
 
 goroutines:
-  first: "Haskell has a lightweight thread feature as in Go."
-  inter: "starts a new lightweight thread running"
+  first: "Haskell has a lightweight thread feature similar to Go."
+  inter: "starts a new lightweight thread"
   overviewPreAsync:
-    '<code>async :: IO a -> Async a</code> is not a special syntax, but a just function.
-    The function <code>async</code> is provided from the '
+    '<code>async :: IO a -> Async a</code> is not special syntax, but a function.
+    The function <code>async</code> is provided by the '
   overviewPostAsync:
     ' package'
   detailPreBase:
-    'Haskell has several tools for communication between different threads.
+    'Haskell has several tools for communicating between threads.
     Basic tools are provided from the standard '
   detailPostBase:
     ' package.
-    Just like Go, we can use channel. (See the next page.)'
+    Like in Go, we can use a channel. (See the next page.)'
   note: ""
 
 channels:
   first:
-    'Channel is one-directional tube to flow values.
-    Values are appended to the end of channel, then taken from the top of channel.'
+    'Channel is a one-directional tube to transport values.
+    Values are appended to the end of the channel, and removed from the beginning of the channel.'
   writeChan: "Append v to the end of channel ch"
-  readChan: "Take one from the top of channel ch"
+  readChan: "Take the first value from the top of channel ch"
   postRW: ""
-  preNewChan: "Channel instance must be built before use."
+  preNewChan: "Channel instances must be constructed before use."
   postNewChan:
-    'Different threads can share one channel.
-    If a thread try to <code>readChan</code> to empty channel,
-    the thread does not raise error, but just be blocked until new value.
-    By the behavior, we can fall threads in line with each other.'
+    'Different threads can share a channel.
+    If a thread tries to <code>readChan</code> from an empty channel,
+    the thread does not raise an error, but blocks until a value is available.
+    This is used to connect threads into a pipeline.'
   example:
-    'The example code makes lightweight threads calculate sum of <code>Int</code> lists.
-    The main thread waits results from lightweight threads, then use them.'
+    'The example code makes lightweight threads calculate the sum of <code>Int</code> lists.
+    The main thread awaits results from the lightweight threads, then uses them.'
   stm:
-    ' package provides another implimentation of channel.
+    ' package provides another implementation of channel.
     STM will be introduced later.
     Now keep in mind only that you should use <code>atomically</code> to run stm computations.'
 
 bufferedChannels:
   first: ' package introduces a size-bounded channel.'
   post:
-    'To <code>writeChan</code> to a full channel is blocked.
-    The reason why we bound channel size is that
-    the production rate of a channel upstream should not be over the consumption rate of a channel downstream.'
-  stm: ' package also have bounded channel: <code>TBQueue</code>'
+    'Calling <code>writeChan</code> on a full channel blocks until space is available.
+    This is used to create backpressure which limits
+    the production rate of a channel upstream if the 
+    consumption rate of the downstream channel is too low.'
+  stm: ' package also have bounded channels, called <code>TBQueue</code>'
 
 rangeAndClose:
   first:
-    'Although Haskell does not have things just like <code>range</code> and <code>close</code> of Go,
-    they can easily be composed if you need.'
+    'Although Haskell channels do not <code>range</code> or <code>close</code> operations like Go,
+    those can easily be implemented if needed.'
   range:
-    '<code>range</code> clause on for statement of Go is useful to iterate channel values like array.
+    'The <code>range</code> clause on a for statement in Go is useful to iterate channel values like a collection.
     Because <code>getChanContents :: Chan a -> IO [a]</code> converts channel to list,
     it works similar to <code>range</code>.'
   close:
@@ -80,42 +81,42 @@ rangeAndClose:
     We send <code>Nothing</code> as the last value.
     Note that this is just a simple solution; it does not cause errors like Go if extra values are sent to a closed channel.'
   list:
-    'By the way, the sample code on the right side can be written by list of Haskell.
+    'By the way, the sample code on the right side can be implemented using Haskells list.
     Refer to the list version below.'
 
 select:
   first:
-    'Although Haskell does not have a thing just like <code>select</code>,
-    it can easily be composed if you need.'
+    'Although Haskell does not have <code>select</code>, 
+    the <code>stm</code> library offers a combinator with a similar effect.'
   preStm:
-    '<code>select</code> in Go chooses a available one of communication operations. The '
+    '<code>select</code> in Go chooses one of a number of available communication operations. Similarly the '
   postStm:
     ' package provides a function <code>orElse :: STM a -> STM a -> STM a</code> which chooses a available one of two stm operations.
-    <code>fold</code> functions in Haskell make two-args function to list function.
-    Note that when multiple operations are available simultaneously, this implimentation chooses a available operation in order from the beginning.
-    (Go <code>select</code> chooses randomly for that case.)
-    And, all stm operations of the list must be a same type.'
+    <code>fold</code> functions in Haskell can then be used to apply this to a whole list of operations.
+    Note that when multiple operations are available simultaneously, this implimentation chooses an available operation in order from the beginning.
+    (Go <code>select</code> chooses randomly in that case.)
+    And, all stm operations of the list must be of the same type.'
   preMsum:
     'Actually <code>STM</code> is a instance of <code>MonadPlus</code>.
-    So we can implement <code>select</code> as below.'
+    So we can implement <code>select</code> as shown below.'
   postMsum:
     'Because the <code>MonadPlus</code> instance is implemented using <code>orElse</code>,
     we can write <code>select</code> in this way.
     But it is not documented explicitly that the <code>MonadPlus</code> instance is implemented by <code>orElse</code>.
-    You should avoid to implement <code>select</code> by <code>MonadPlus</code>.'
+    Therefore you should avoid implementing <code>select</code> using <code>MonadPlus</code>.'
 
 defaultSelection:
   first:
-    'The <code>select</code> of Go can include a default case when there is no other available communication.
-    Default case make <code>select</code> non-blocking.'
+    'The <code>select</code> in Go can include a default case when there is no other available communication.
+    A default case makes <code>select</code> non-blocking.'
   preCode:
-    'In our Haskell-version <code>select</code>, just <code>return</code> at the last of the list.'
+    'In our Haskell-version <code>select</code>, we can simply add an operation to the end of our list which never blocks.'
   tickAfter:
-    'The sample code on the right side also implements functions similar to <code>time.Tick</code> and <code>time.After</code> of Go.'
+    'The sample code on the right side also implements functions similar to <code>time.Tick</code> and <code>time.After</code> from Go.'
 
 equivalentBinaryTrees1:
   first:
-    'Different binary trees storing same elements can be different shapes.
+    'Different binary trees storing same elements can be of different shapes.
     Following two binary trees have same elements.'
   function:
     'Using concurrency techniques we have seen, make a function to check whether two binary trees store same elements.'
