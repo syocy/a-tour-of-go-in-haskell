@@ -248,6 +248,7 @@ clenseCode = LT.concatMap escape . removeComment
 generateHtmlFiles :: IO ()
 generateHtmlFiles = do
   i18ns <- loadI18NFiles
+  let langs = map (\i -> ((T.take 2 $ i^.localeF), "https://a-tour-of-go-in-haskell.syocy.net/" <> (i^.localeF) <> "/index.html")) i18ns
   forM_ i18ns $ \i18n -> do
     mktree $ fromString $ T.unpack $ "target/" <> (i18n^.localeF)
     let url = "https://a-tour-of-go-in-haskell.syocy.net/" <> (i18n^.localeF) <> "/index.html"
@@ -265,6 +266,7 @@ generateHtmlFiles = do
     code <- case srcM of
       Nothing -> return ""
       Just src -> clenseCode <$> LT.readFile src
+    let langs = map (\i -> ((T.take 2 $ i^.localeF), "https://a-tour-of-go-in-haskell.syocy.net/" <> (i^.localeF) <> "/" <> (page^.targetF))) i18ns
     forM_ i18ns $ \i18n -> do
       let url = "https://a-tour-of-go-in-haskell.syocy.net/" <> (i18n^.localeF) <> "/" <> (page^.targetF)
       let topPage = "../../" <> (i18n^.localeF) <> "/index.html"

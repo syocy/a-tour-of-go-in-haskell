@@ -4,6 +4,10 @@
         <meta charset="UTF-8">
         <title>A Tour of Go in Haskell</title>
         <link rel="icon" type="image/png" href="../favicon.png">
+        <!-- hreflang -->
+        %{forall lang <- langs}
+        <link rel="alternate" hreflang="#{fst lang}" href="#{snd lang}">
+        %{endforall}
         <!-- preconnect -->
         <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
         <!-- skeleton.css -->
