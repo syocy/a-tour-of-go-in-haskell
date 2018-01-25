@@ -25,7 +25,7 @@ goroutines:
   first: "Haskell has a lightweight thread feature similar to Go."
   inter: "starts a new lightweight thread"
   overviewPreAsync:
-    '<code>async :: IO a -> Async a</code> is not special syntax, but a function.
+    '<code>async :: IO a -> IO (Async a)</code> is not special syntax, but a function.
     The function <code>async</code> is provided by the '
   overviewPostAsync:
     ' package'
